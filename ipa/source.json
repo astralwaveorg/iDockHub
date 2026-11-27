@@ -29,6 +29,15 @@
       },
       "versions": [
         {
+          "version": "2.0.10",
+          "buildVersion": "1",
+          "date": "2026-11-27",
+          "localizedDescription": "MoviePilot 现已全面提供 **iOS / iPadOS**、**Android** 与 **HarmonyOS NEXT** 三端全原生客户端（统一版本 **`2.0.10`**），基于 Rust 共享业务内核直连 MoviePilot V3 后端，带来一致的核心功能闭环与地道原生界面体验。\n\n### 本版本核心亮点\n\n- **发现页与影视详情页支持免配置多元评分展示**：\n  - 无需额外部署或填写第三方密钥，详情页与发现流自动聚合展示 IMDb、TMDB、豆瓣、烂番茄与 Bangumi 多元评分徽标，并在关联 Emby / Plex 媒体库时自动融合媒体服务器侧评分元数据。\n- **三端播放器投屏入口与卡片列表交互优化**：\n  - iOS（系统 AirPlay 路由面板）、Android 与 HarmonyOS NEXT 播放器顶栏统一配备原生投屏图标按钮。\n  - 订阅卡片与下载任务卡片统一收敛为长按唤出删除操作，移除常驻冗余删除按钮；修正订阅页加载骨架屏占位卡片宽度与实际卡片完全对齐。\n- **iOS MPV 增强播放内核体验全面修复**：\n  - **彻底修复内嵌",
+          "downloadURL": "https://github.com/jxxghp/MoviePilot-App/releases/download/v2.0.10/MoviePilot-2.0.10-ios-unsigned.ipa",
+          "size": 51818796,
+          "minOSVersion": "16.0"
+        },
+        {
           "version": "2.0.9",
           "buildVersion": "1",
           "date": "2026-11-27",
@@ -44,15 +53,6 @@
           "localizedDescription": "MoviePilot 现已全面提供 **iOS / iPadOS**、**Android** 与 **HarmonyOS NEXT** 三端全原生客户端（统一版本 **`2.0.8`**），基于 Rust 共享业务内核直连 MoviePilot V3 后端，带来一致的核心功能闭环与地道原生界面体验。\n\n### 本版本核心亮点\n\n- **三端流畅度、高刷滚动与页面秒开深度性能优化**：\n  - **Android 全面减负提速**：引入全局 Compose Compiler 稳定性配置（`compose_stability.conf`），让跨模块 DTO 与列表项全面支持智能跳过无效重组；移除主壳与详情页全屏嵌套 `hazeSource` 离屏纹理拷贝及逐像素动态模糊半径重建，将首页与影视详情页的视差、顶栏柔化罩全部下沉至纯绘制层执行，实现零整页重组丝滑滚动；一级主导航（发现、订阅、我的、更多）升级为常驻内存保活并扩展设置与插件中心会话缓存，切换页签与返回上级达到 0ms 瞬开；Coil 图片管线补齐 256MB 磁盘缓存、25% 内存缓存、缩略图按需降采样与代理图片持久化缓存策略。\n ",
           "downloadURL": "https://github.com/jxxghp/MoviePilot-App/releases/download/v2.0.8/MoviePilot-2.0.8-ios-unsigned.ipa",
           "size": 51640679,
-          "minOSVersion": "16.0"
-        },
-        {
-          "version": "2.0.7",
-          "buildVersion": "1",
-          "date": "2026-11-27",
-          "localizedDescription": "MoviePilot 现已全面提供 **iOS / iPadOS**、**Android** 与 **HarmonyOS NEXT** 三端全原生客户端（统一版本 **`2.0.7`**），基于 Rust 共享业务内核直连 MoviePilot V3 后端，带来一致的核心功能闭环与地道原生界面体验。\n\n### 本版本核心亮点\n\n- **三端统一桌面小组件体系（主体小组件 + 正在播放小组件 + 插件预设与自定义布局小组件）**：\n  - **APP 主体小组件三端对齐**：Android（Jetpack Glance）与 HarmonyOS（FormKit 服务卡片）全面看齐 iOS，统一支持「系统概览」「下载状态」「近期入库」「订阅」四类核心视图、小/中/大三种响应式尺寸、媒体名称隐私开关与自适应明暗精致视觉材质，点击直达对应业务页。\n  - **「正在播放」桌面播控小组件**：三端新增专用音频播控桌面小组件，与插件 `audio.setNowPlaying` 自动实时联动，桌面直接展示专辑封面、歌名、歌手、逐行同步歌词，并提供「喜欢」「上一首」「播放/暂停」「下一首」交互按钮与一键",
-          "downloadURL": "https://github.com/jxxghp/MoviePilot-App/releases/download/v2.0.7/MoviePilot-2.0.7-ios-unsigned.ipa",
-          "size": 51600908,
           "minOSVersion": "16.0"
         }
       ],

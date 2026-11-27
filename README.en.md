@@ -38,7 +38,7 @@ sidestore://source?url=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fastralwaveorg%2FiDo
 
 | App | Latest version | Devices | Date (UTC) | Upstream |
 | --- | --- | --- | --- | --- |
-| MoviePilot | 2.0.9 | iPhone / iPad | 2026-11-27 | [GitHub Releases](https://github.com/jxxghp/MoviePilot-App/releases) |
+| MoviePilot | 2.0.10 | iPhone / iPad | 2026-11-27 | [GitHub Releases](https://github.com/jxxghp/MoviePilot-App/releases) |
 | uYouEnhanced | 21.20.4 | iPhone / iPad | 2026-10-09 | [Publisher source](https://raw.githubusercontent.com/arichornlover/arichornlover.github.io/main/apps.json) |
 | iTorrent | 2.2.0 | iPhone / iPad | 2026-07-19 | [GitHub Releases](https://github.com/XITRIX/iTorrent/releases) |
 | PiliNara | 2.2.0 | iPhone / iPad | 2026-11-09 | [GitHub Releases](https://github.com/Starfallan/PiliNara/releases) |
