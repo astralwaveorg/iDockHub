@@ -3,7 +3,7 @@
     "repo": "jxxghp/MoviePilot-App",
     "overrides": {
       "localizedDescription": "在 iOS 上管理 MoviePilot 服务和 NAS 媒体库。",
-      "iconURL": "https://raw.githubusercontent.com/jxxghp/MoviePilot-Frontend/main/public/logo.png",
+      "iconURL": "https://cdn.jsdelivr.net/gh/astralwaveorg/iDockHub@main/ipa/icons/moviepilot.png",
       "tintColor": "#5E5CE6"
     }
   },
@@ -11,24 +11,37 @@
     "repo": "arichornlover/uYouEnhanced",
     "sourceURL": "https://raw.githubusercontent.com/arichornlover/arichornlover.github.io/main/apps.json",
     "bundleIdentifier": "com.google.ios.youtube",
-    "devices": ["iPhone", "iPad"]
+    "devices": ["iPhone", "iPad"],
+    "overrides": {
+      "iconURL": "https://cdn.jsdelivr.net/gh/astralwaveorg/iDockHub@main/ipa/icons/uyouenhanced.png"
+    }
   },
   {
-    "repo": "XITRIX/iTorrent"
+    "repo": "XITRIX/iTorrent",
+    "overrides": {
+      "iconURL": "https://cdn.jsdelivr.net/gh/astralwaveorg/iDockHub@main/ipa/icons/itorrent.png"
+    }
   },
   {
     "repo": "Starfallan/PiliNara",
-    "assetPattern": "PiliNara_ios_*.ipa"
+    "assetPattern": "PiliNara_ios_*.ipa",
+    "overrides": {
+      "iconURL": "https://cdn.jsdelivr.net/gh/astralwaveorg/iDockHub@main/ipa/icons/pilinara.png"
+    }
   },
   {
     "repo": "NuvioMedia/NuvioMobile",
-    "channel": "latest"
+    "channel": "latest",
+    "overrides": {
+      "iconURL": "https://cdn.jsdelivr.net/gh/astralwaveorg/iDockHub@main/ipa/icons/nuvio.png"
+    }
   },
   {
     "repo": "waruhachi/TGExtra",
     "channel": "latest",
     "overrides": {
-      "name": "TGExtra"
+      "name": "TGExtra",
+      "iconURL": "https://cdn.jsdelivr.net/gh/astralwaveorg/iDockHub@main/ipa/icons/tgextra.png"
     }
   }
 ]

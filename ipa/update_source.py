@@ -32,6 +32,8 @@ SOURCE = {
     "description": "收录来自 GitHub Releases 和项目维护者软件源的 IPA。每 3 小时检查一次更新。",
     "identifier": "org.astralwave.idockhub",
     "sourceURL": "https://raw.githubusercontent.com/astralwaveorg/iDockHub/main/ipa/source.json",
+    "iconURL": "https://cdn.jsdelivr.net/gh/astralwaveorg/iDockHub@main/ipa/icons/idockhub.png",
+    "tintColor": "5DA9F3",
 }
 
 

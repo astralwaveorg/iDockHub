@@ -4,13 +4,15 @@
   "description": "收录来自 GitHub Releases 和项目维护者软件源的 IPA。每 3 小时检查一次更新。",
   "identifier": "org.astralwave.idockhub",
   "sourceURL": "https://raw.githubusercontent.com/astralwaveorg/iDockHub/main/ipa/source.json",
+  "iconURL": "https://cdn.jsdelivr.net/gh/astralwaveorg/iDockHub@main/ipa/icons/idockhub.png",
+  "tintColor": "5DA9F3",
   "apps": [
     {
       "name": "MoviePilot",
       "bundleIdentifier": "com.moviepilot.app",
       "developerName": "jxxghp",
       "localizedDescription": "在 iOS 上管理 MoviePilot 服务和 NAS 媒体库。",
-      "iconURL": "https://raw.githubusercontent.com/jxxghp/MoviePilot-Frontend/main/public/logo.png",
+      "iconURL": "https://cdn.jsdelivr.net/gh/astralwaveorg/iDockHub@main/ipa/icons/moviepilot.png",
       "appPermissions": {
         "entitlements": [
           "aps-environment",
@@ -61,7 +63,7 @@
       "bundleIdentifier": "com.google.ios.youtube",
       "developerName": "arichornlover & Various Contributors",
       "localizedDescription": "uYou is the best tweak for the YouTube app. uYouEnhanced is a modified version of qnblackcat's uYouPlus & MiRO92's uYou with even more features. Additional features include customizable UI, enhanced video controls, and more.",
-      "iconURL": "https://raw.githubusercontent.com/arichornlover/uYouEnhanced/1314354bff6ef07aca60d7b9a77bd91a5f985ab4/Localizations/uYouPlus.bundle/AppIcons/AppIcon4.png",
+      "iconURL": "https://cdn.jsdelivr.net/gh/astralwaveorg/iDockHub@main/ipa/icons/uyouenhanced.png",
       "tintColor": "#e81e8a",
       "appPermissions": {
         "privacy": {
@@ -122,7 +124,7 @@
       "bundleIdentifier": "com.xitrix.iTorrent2",
       "developerName": "XITRIX",
       "localizedDescription": "Torrent client for iOS 16+",
-      "iconURL": "https://avatars.githubusercontent.com/u/9553519?v=4",
+      "iconURL": "https://cdn.jsdelivr.net/gh/astralwaveorg/iDockHub@main/ipa/icons/itorrent.png",
       "appPermissions": {
         "entitlements": [
           "com.apple.security.application-groups",
@@ -167,7 +169,7 @@
       "bundleIdentifier": "com.example.pilinara",
       "developerName": "Starfallan",
       "localizedDescription": "PiliPlus 的第三方Fork版本，做了一些自用改动",
-      "iconURL": "https://avatars.githubusercontent.com/u/36763490?v=4",
+      "iconURL": "https://cdn.jsdelivr.net/gh/astralwaveorg/iDockHub@main/ipa/icons/pilinara.png",
       "appPermissions": {
         "entitlements": [],
         "privacy": {
@@ -212,7 +214,7 @@
       "bundleIdentifier": "com.nuvio.media",
       "developerName": "NuvioMedia",
       "localizedDescription": "Official Nuvio Mobile Repository",
-      "iconURL": "https://avatars.githubusercontent.com/u/267417830?v=4",
+      "iconURL": "https://cdn.jsdelivr.net/gh/astralwaveorg/iDockHub@main/ipa/icons/nuvio.png",
       "appPermissions": {
         "entitlements": [],
         "privacy": {
@@ -236,7 +238,7 @@
       "bundleIdentifier": "ph.telegra.Telegraph",
       "developerName": "waruhachi",
       "localizedDescription": "A Telegram iOS Tweak",
-      "iconURL": "https://avatars.githubusercontent.com/u/156133757?v=4",
+      "iconURL": "https://cdn.jsdelivr.net/gh/astralwaveorg/iDockHub@main/ipa/icons/tgextra.png",
       "appPermissions": {
         "entitlements": [
           "aps-environment",

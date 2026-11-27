@@ -1,5 +1,7 @@
 # iDockHub
 
+<img src="ipa/icons/idockhub.png" alt="iDockHub logo" width="96" height="96">
+
 [简体中文](README.md) · [![Update the IPA source](https://github.com/astralwaveorg/iDockHub/actions/workflows/update-ipa-source.yml/badge.svg?branch=main)](https://github.com/astralwaveorg/iDockHub/actions/workflows/update-ipa-source.yml)
 
 iDockHub combines GitHub Releases and publisher sources in one subscription for LiveContainer and SideStore. It keeps up to three versions per app. The IPA files stay with their original hosts.
@@ -82,7 +84,10 @@ Use `sourceURL` to import an app. This is the entry for uYouEnhanced:
   "repo": "arichornlover/uYouEnhanced",
   "sourceURL": "https://raw.githubusercontent.com/arichornlover/arichornlover.github.io/main/apps.json",
   "bundleIdentifier": "com.google.ios.youtube",
-  "devices": ["iPhone", "iPad"]
+  "devices": ["iPhone", "iPad"],
+  "overrides": {
+    "iconURL": "https://cdn.jsdelivr.net/gh/astralwaveorg/iDockHub@main/ipa/icons/uyouenhanced.png"
+  }
 }
 ```
 
@@ -111,6 +116,7 @@ The script generates the source, both app tables, and a cache of IPA metadata. T
 | --- | --- |
 | [`ipa/apps.json`](ipa/apps.json) | App list that you edit |
 | [`ipa/source.json`](ipa/source.json) | Generated source |
+| [`ipa/icons/`](ipa/icons/) | The iDockHub logo in SVG and PNG, plus app icons from publishers |
 | `ipa/.sync-state.json` | Generated cache that prevents repeat IPA downloads |
 | [`ipa/update_source.py`](ipa/update_source.py) | Read the app list, combine both inputs, and update the source and tables |
 | [`ipa/github_release.py`](ipa/github_release.py) | Select GitHub releases and their IPA files |

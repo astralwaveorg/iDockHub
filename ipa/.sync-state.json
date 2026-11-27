@@ -1,6 +1,6 @@
 {
   "jxxghp/moviepilot-app": {
-    "config": "7013395d9a47e690a37fe62b9cd4e05225308c897d997202b69930ced5daea94",
+    "config": "251e189a67944fc3af148c3a5b02490a8c4778eec5027749a73d29982d0c91c3",
     "bundleIdentifier": "com.moviepilot.app",
     "assets": {
       "[799772407,\"2026-11-27T09:09:59Z\",51682733,\"sha256:ecbd6534670fb3ebf39f29e4536656b353ed44b979faf2a0b1238465d73821c0\"]": {
@@ -82,7 +82,7 @@
     ]
   },
   "arichornlover/uyouenhanced:com.google.ios.youtube": {
-    "config": "c383ed3e22a7d0c4863cc12f23612669f11fabe2ec533fc87def3eba1b7a8df9",
+    "config": "677c4a230f6441b0a0a1b3feedba901a70cd4df90eebd0efec068f44b1adc860",
     "bundleIdentifier": "com.google.ios.youtube",
     "assets": {},
     "devices": [
@@ -91,7 +91,7 @@
     ]
   },
   "xitrix/itorrent": {
-    "config": "fb960ba20ec95163731d2e0714b29902178fac35bf2b00379ba1739ce2f6ecd8",
+    "config": "d4235d4c54d5940361df8435727f9e3f0712f94b68bc8ad0ca086b13ccbea39f",
     "bundleIdentifier": "com.xitrix.iTorrent2",
     "assets": {
       "[482285253,\"2026-07-19T09:59:39Z\",24288935,\"sha256:50457a89299bd62836ca1eb1ae0a5adbe097454c58ce67605bbe6710c37193d7\"]": {
@@ -154,7 +154,7 @@
     ]
   },
   "starfallan/pilinara": {
-    "config": "5ee8cc13f81028cdf2409b9be2d5c40d565b490cfe68f6dc7ea336748cb3fce3",
+    "config": "df070e15de688d673fe1153fd052c3377d0d152e4b8bb57ec87184c80df84f6c",
     "bundleIdentifier": "com.example.pilinara",
     "assets": {
       "[725787808,\"2026-11-09T01:20:00Z\",26646283,\"sha256:9641a3a86d4f5b7ffe2e7d3b5fc69327509ae9fc757544419ec8acfabfcb9dcc\"]": {
@@ -221,7 +221,7 @@
     ]
   },
   "nuviomedia/nuviomobile": {
-    "config": "4e727bdbf1b601f242d2cc6021dbcbcb1ed135c74fb641934c211465a56f7178",
+    "config": "ffa6ef5e42978abca2976381d7530f09d8b82adc47cf0e14a93c96c015fc36d0",
     "bundleIdentifier": "com.nuvio.media",
     "assets": {
       "[774025874,\"2026-11-21T01:34:36Z\",69936384,\"sha256:3218eb0d6d30729014aba4e4f4db6edef7116504c297bc3533cc775aba06ed90\"]": {
@@ -247,7 +247,7 @@
     ]
   },
   "waruhachi/tgextra": {
-    "config": "8e6302946569d5f273a3a9cb574aa04bfcba6870042a8b1b9d67ebd8c9c0c819",
+    "config": "32f628151c3f89b41e74bf55d0e6d7a2eeecbbf6e72fba084e41aa9b927d6698",
     "bundleIdentifier": "ph.telegra.Telegraph",
     "assets": {
       "[266899401,\"2025-06-24T19:05:16Z\",76857930,\"sha256:1ee0eb91ba16cbc432e4f42c35efa47d66cdeea690e318228acd5e51cbb6a3da\"]": {

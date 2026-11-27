@@ -1,5 +1,7 @@
 # iDockHub
 
+<img src="ipa/icons/idockhub.png" alt="iDockHub 标志" width="96" height="96">
+
 [English](README.en.md) · [![更新 IPA 软件源](https://github.com/astralwaveorg/iDockHub/actions/workflows/update-ipa-source.yml/badge.svg?branch=main)](https://github.com/astralwaveorg/iDockHub/actions/workflows/update-ipa-source.yml)
 
 iDockHub 把 GitHub Releases 和应用发布者的软件源汇到同一个订阅地址，供 LiveContainer 和 SideStore 使用。每个应用最多保留 3 个版本，IPA 仍由上游提供。
@@ -82,7 +84,10 @@ sidestore://source?url=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fastralwaveorg%2FiDo
   "repo": "arichornlover/uYouEnhanced",
   "sourceURL": "https://raw.githubusercontent.com/arichornlover/arichornlover.github.io/main/apps.json",
   "bundleIdentifier": "com.google.ios.youtube",
-  "devices": ["iPhone", "iPad"]
+  "devices": ["iPhone", "iPad"],
+  "overrides": {
+    "iconURL": "https://cdn.jsdelivr.net/gh/astralwaveorg/iDockHub@main/ipa/icons/uyouenhanced.png"
+  }
 }
 ```
 
@@ -111,6 +116,7 @@ python3 ipa/update_source.py
 | --- | --- |
 | [`ipa/apps.json`](ipa/apps.json) | 手动维护的应用清单 |
 | [`ipa/source.json`](ipa/source.json) | 生成的软件源 |
+| [`ipa/icons/`](ipa/icons/) | iDockHub 标志的 SVG 原稿和 PNG，以及上游应用的图标 |
 | `ipa/.sync-state.json` | 生成的缓存，避免重复下载同一个 IPA |
 | [`ipa/update_source.py`](ipa/update_source.py) | 读取清单，汇总两个来源，更新软件源和应用表 |
 | [`ipa/github_release.py`](ipa/github_release.py) | 选择 GitHub Release 渠道和 IPA |
