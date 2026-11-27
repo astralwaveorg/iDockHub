@@ -40,6 +40,8 @@ sidestore://source?url=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fastralwaveorg%2FiDo
 | uYouEnhanced | 21.20.4 | iPhone / iPad | 2026-10-09 | [作者源](https://raw.githubusercontent.com/arichornlover/arichornlover.github.io/main/apps.json) |
 | iTorrent | 2.2.0 | iPhone / iPad | 2026-07-19 | [GitHub Releases](https://github.com/XITRIX/iTorrent/releases) |
 | PiliNara | 2.2.0 | iPhone / iPad | 2026-11-09 | [GitHub Releases](https://github.com/Starfallan/PiliNara/releases) |
+| Nuvio | 1.0.1 | iPhone / iPad | 2026-11-21 | [GitHub Releases](https://github.com/NuvioMedia/NuvioMobile/releases) |
+| TGExtra | 11.12.1 | iPhone / iPad | 2025-06-19 | [GitHub Releases](https://github.com/waruhachi/TGExtra/releases) |
 
 <!-- APPS_TABLE_END -->
 

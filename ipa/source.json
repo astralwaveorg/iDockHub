@@ -206,6 +206,80 @@
           "minOSVersion": "15.0"
         }
       ]
+    },
+    {
+      "name": "Nuvio",
+      "bundleIdentifier": "com.nuvio.media",
+      "developerName": "NuvioMedia",
+      "localizedDescription": "Official Nuvio Mobile Repository",
+      "iconURL": "https://avatars.githubusercontent.com/u/267417830?v=4",
+      "appPermissions": {
+        "entitlements": [],
+        "privacy": {
+          "NSLocalNetworkUsageDescription": "Nuvio connects to media servers on your local network."
+        }
+      },
+      "versions": [
+        {
+          "version": "1.0.1",
+          "buildVersion": "160",
+          "date": "2026-11-21",
+          "localizedDescription": "- c31c30e1 fix(player): ignore gesture insets for bottom controls on android @skoruppa  \r\n- 4baf886e fix(ios): keep downloads out of iCloud and computer backups @claude  \r\n- f81edc65 fix(debrid): match TorBox alternative-hash cache answers @WhiteGiso  \r\n- 103c5e07 fix(trakt): prevent unbounded library refresh queue @enricopro  \r\n",
+          "downloadURL": "https://github.com/NuvioMedia/NuvioMobile/releases/download/1.0.1/nuvio-1.0.1-full-release.ipa",
+          "size": 69936384,
+          "minOSVersion": "16.1"
+        }
+      ]
+    },
+    {
+      "name": "TGExtra",
+      "bundleIdentifier": "ph.telegra.Telegraph",
+      "developerName": "waruhachi",
+      "localizedDescription": "A Telegram iOS Tweak",
+      "iconURL": "https://avatars.githubusercontent.com/u/156133757?v=4",
+      "appPermissions": {
+        "entitlements": [
+          "aps-environment",
+          "com.apple.developer.applesignin",
+          "com.apple.developer.associated-domains",
+          "com.apple.developer.carplay-messaging",
+          "com.apple.developer.icloud-container-environment",
+          "com.apple.developer.icloud-container-identifiers",
+          "com.apple.developer.icloud-services",
+          "com.apple.developer.in-app-payments",
+          "com.apple.developer.pushkit.unrestricted-voip",
+          "com.apple.developer.siri",
+          "com.apple.developer.ubiquity-kvstore-identifier",
+          "com.apple.developer.usernotifications.communication",
+          "com.apple.developer.usernotifications.filtering",
+          "com.apple.security.application-groups",
+          "keychain-access-groups"
+        ],
+        "privacy": {
+          "NSCameraUsageDescription": "We need this so that you can take and share photos and videos.",
+          "NSContactsUsageDescription": "Telegram stores your contacts heavily encrypted in the cloud to let you connect with your friends across all your devices.",
+          "NSFaceIDUsageDescription": "You can use Face ID to unlock the app.",
+          "NSLocationAlwaysUsageDescription": "When you send your location to your friends, Telegram needs access to show them a map. You also need this to send locations from an Apple Watch.",
+          "NSLocationWhenInUseUsageDescription": "When you send your location to your friends, Telegram needs access to show them a map.",
+          "NSMicrophoneUsageDescription": "We need this so that you can record and share voice messages and videos with sound.",
+          "NSMotionUsageDescription": "When you send your location to your friends, Telegram needs access to show them a map.",
+          "NSPhotoLibraryAddUsageDescription": "We need this so that you can share photos and videos from your photo library.",
+          "NSPhotoLibraryUsageDescription": "We need this so that you can share photos and videos from your photo library.",
+          "NSSiriUsageDescription": "You can use Siri to send messages.",
+          "NSSpeechRecognitionUsageDescription": "We need this to transcribe audio messages on your request."
+        }
+      },
+      "versions": [
+        {
+          "version": "11.12.1",
+          "buildVersion": "30902",
+          "date": "2025-06-19",
+          "localizedDescription": "### Rootful (iphoneos-arm)\n* MD5: 7f91f35df7b05eca516c9895a27c60ce\n* SHA1: e0d8626cf2face1761e34c0d1aff76d23ebeebd3\n* SHA256: 881f7b4d98110ff5a02a14ea372e1998206071a8ce3f1842b48b0d99ffdbf352\n\n### Rootless (iphoneos-arm64)\n* MD5: 129c2fe6985679a6b5645c6c1148e0a0\n* SHA1: 814a16d1db1dc1c1f6ed27f93284fd30eaa553cd\n* SHA256: 4b3890a6d79fa4fd945783c064a620dbc70705d998e3119ee6742c1629931c93\n\n### RootHide (iphoneos-arm64e)\n* MD5: 5e9172723a9394e2e5bfaf688102dbbe\n* SHA1: b1ffe0686367e362e3a19052aa811989b4",
+          "downloadURL": "https://github.com/waruhachi/TGExtra/releases/download/release/ph.telegra.Telegraph-11.12.1-TGExtra-1.2.1.ipa",
+          "size": 76857930,
+          "minOSVersion": "12.0"
+        }
+      ]
     }
   ],
   "news": []

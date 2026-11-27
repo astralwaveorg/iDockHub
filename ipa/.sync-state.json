@@ -219,5 +219,83 @@
       "iPhone",
       "iPad"
     ]
+  },
+  "nuviomedia/nuviomobile": {
+    "config": "4e727bdbf1b601f242d2cc6021dbcbcb1ed135c74fb641934c211465a56f7178",
+    "bundleIdentifier": "com.nuvio.media",
+    "assets": {
+      "[774025874,\"2026-11-21T01:34:36Z\",69936384,\"sha256:3218eb0d6d30729014aba4e4f4db6edef7116504c297bc3533cc775aba06ed90\"]": {
+        "bundleIdentifier": "com.nuvio.media",
+        "version": "1.0.1",
+        "buildVersion": "160",
+        "name": "Nuvio",
+        "minOSVersion": "16.1",
+        "devices": [
+          "iPhone",
+          "iPad"
+        ],
+        "privacy": {
+          "NSLocalNetworkUsageDescription": "Nuvio connects to media servers on your local network."
+        },
+        "entitlements": [],
+        "needsEntitlementsOverride": false
+      }
+    },
+    "devices": [
+      "iPhone",
+      "iPad"
+    ]
+  },
+  "waruhachi/tgextra": {
+    "config": "8e6302946569d5f273a3a9cb574aa04bfcba6870042a8b1b9d67ebd8c9c0c819",
+    "bundleIdentifier": "ph.telegra.Telegraph",
+    "assets": {
+      "[266899401,\"2025-06-24T19:05:16Z\",76857930,\"sha256:1ee0eb91ba16cbc432e4f42c35efa47d66cdeea690e318228acd5e51cbb6a3da\"]": {
+        "bundleIdentifier": "ph.telegra.Telegraph",
+        "version": "11.12.1",
+        "buildVersion": "30902",
+        "name": "Telegram",
+        "minOSVersion": "12.0",
+        "devices": [
+          "iPhone",
+          "iPad"
+        ],
+        "privacy": {
+          "NSCameraUsageDescription": "We need this so that you can take and share photos and videos.",
+          "NSContactsUsageDescription": "Telegram stores your contacts heavily encrypted in the cloud to let you connect with your friends across all your devices.",
+          "NSFaceIDUsageDescription": "You can use Face ID to unlock the app.",
+          "NSLocationAlwaysUsageDescription": "When you send your location to your friends, Telegram needs access to show them a map. You also need this to send locations from an Apple Watch.",
+          "NSLocationWhenInUseUsageDescription": "When you send your location to your friends, Telegram needs access to show them a map.",
+          "NSMicrophoneUsageDescription": "We need this so that you can record and share voice messages and videos with sound.",
+          "NSMotionUsageDescription": "When you send your location to your friends, Telegram needs access to show them a map.",
+          "NSPhotoLibraryAddUsageDescription": "We need this so that you can share photos and videos from your photo library.",
+          "NSPhotoLibraryUsageDescription": "We need this so that you can share photos and videos from your photo library.",
+          "NSSiriUsageDescription": "You can use Siri to send messages.",
+          "NSSpeechRecognitionUsageDescription": "We need this to transcribe audio messages on your request."
+        },
+        "entitlements": [
+          "aps-environment",
+          "com.apple.developer.applesignin",
+          "com.apple.developer.associated-domains",
+          "com.apple.developer.carplay-messaging",
+          "com.apple.developer.icloud-container-environment",
+          "com.apple.developer.icloud-container-identifiers",
+          "com.apple.developer.icloud-services",
+          "com.apple.developer.in-app-payments",
+          "com.apple.developer.pushkit.unrestricted-voip",
+          "com.apple.developer.siri",
+          "com.apple.developer.ubiquity-kvstore-identifier",
+          "com.apple.developer.usernotifications.communication",
+          "com.apple.developer.usernotifications.filtering",
+          "com.apple.security.application-groups",
+          "keychain-access-groups"
+        ],
+        "needsEntitlementsOverride": false
+      }
+    },
+    "devices": [
+      "iPhone",
+      "iPad"
+    ]
   }
 }

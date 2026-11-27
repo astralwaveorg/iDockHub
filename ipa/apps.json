@@ -19,5 +19,16 @@
   {
     "repo": "Starfallan/PiliNara",
     "assetPattern": "PiliNara_ios_*.ipa"
+  },
+  {
+    "repo": "NuvioMedia/NuvioMobile",
+    "channel": "latest"
+  },
+  {
+    "repo": "waruhachi/TGExtra",
+    "channel": "latest",
+    "overrides": {
+      "name": "TGExtra"
+    }
   }
 ]
