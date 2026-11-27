@@ -1,122 +1,34 @@
+import hashlib
 import json
 import os
 import re
 import sys
+from datetime import date
+from fnmatch import fnmatchcase
 from pathlib import Path
+from urllib.error import HTTPError
+from urllib.parse import quote, urlsplit
 from urllib.request import Request, urlopen
 
+from ipa_metadata import inspect_asset
+
 IPA_DIR = Path(__file__).resolve().parent
-README = IPA_DIR.parent / "README.md"
+README_TABLES = {
+    "README.md": (("应用", "最新版本", "日期（UTC）", "上游仓库"), "暂无应用"),
+    "README.en.md": (("App", "Latest version", "Date (UTC)", "Upstream repository"), "No apps listed"),
+}
 TABLE_START = "<!-- APPS_TABLE_START -->"
 TABLE_END = "<!-- APPS_TABLE_END -->"
-APP_FIELDS = ("name", "bundleIdentifier", "developerName", "localizedDescription", "iconURL")
+MAX_VERSIONS = 3
+CHANNELS = {"stable", "latest", "nightly", "prerelease"}
+APP_FIELDS = {"name", "developerName", "localizedDescription", "iconURL", "tintColor", "entitlements"}
 SOURCE = {
     "name": "iDockHub IPA Source",
-    "subtitle": "Astral 自维护 iOS 开源应用源",
-    "description": "每 3 小时自动追踪 GitHub Releases 更新的个人 IPA 软件源",
+    "subtitle": "个人自维护 iOS 开源应用源",
+    "description": "从 GitHub Releases 收录开源 iOS 应用。每 3 小时检查一次更新。",
     "identifier": "org.astralwave.idockhub",
     "sourceURL": "https://raw.githubusercontent.com/astralwaveorg/iDockHub/main/ipa/source.json",
 }
-
-
-def load_config(path):
-    configs = json.loads(path.read_text(encoding="utf-8"))
-    if not isinstance(configs, list):
-        raise ValueError("apps.json 必须是 JSON 数组")
-
-    seen = set()
-    for i, config in enumerate(configs, 1):
-        if not isinstance(config, dict):
-            raise ValueError(f"第 {i} 项必须是 JSON 对象")
-        for field in ("repo", *APP_FIELDS):
-            value = config.get(field)
-            if not isinstance(value, str) or not value.strip():
-                raise ValueError(f"第 {i} 项的 {field} 必须是非空字符串")
-        repo = config["repo"]
-        if (
-            not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9-]*/[A-Za-z0-9_.-]+", repo)
-            or repo.split("/")[1] in (".", "..")
-        ):
-            raise ValueError(f"第 {i} 项的 repo 必须是 GitHub 的 owner/repo")
-        bundle_id = config["bundleIdentifier"]
-        if bundle_id in seen:
-            raise ValueError(f"重复的 bundleIdentifier：{bundle_id}")
-        seen.add(bundle_id)
-
-        limit = config.get("maxVersions", 5)
-        if type(limit) is not int or limit < 1:
-            raise ValueError(f"{repo} 的 maxVersions 必须为正整数")
-        if type(config.get("includePrerelease", False)) is not bool:
-            raise ValueError(f"{repo} 的 includePrerelease 必须为布尔值")
-        try:
-            config["assetRegex"] = re.compile(config.get("assetRegex", r"\.ipa$"), re.IGNORECASE)
-        except (TypeError, re.error) as exc:
-            raise ValueError(f"{repo} 的 assetRegex 无效：{exc}") from exc
-    return configs
-
-
-def fetch_releases(repo, token):
-    headers = {
-        "Accept": "application/vnd.github+json",
-        "User-Agent": "iDockHub",
-        "X-GitHub-Api-Version": "2022-11-28",
-    }
-    if token:
-        headers["Authorization"] = f"Bearer {token}"
-
-    page = 1
-    while True:
-        url = f"https://api.github.com/repos/{repo}/releases?per_page=100&page={page}"
-        with urlopen(Request(url, headers=headers), timeout=15) as response:
-            releases = json.load(response)
-        if not isinstance(releases, list):
-            raise ValueError("GitHub 返回的 Release 数据不是数组")
-        yield from releases
-        if len(releases) < 100:
-            break
-        page += 1
-
-
-def build_app(config, releases):
-    # GitHub 返回的发布时间是 UTC；按发布时间排序，避免旧标签晚发布时顺序出错。
-    candidates = (
-        release for release in releases
-        if not release["draft"] and release.get("published_at")
-        and (config.get("includePrerelease", False) or not release["prerelease"])
-    )
-    versions = []
-    seen = set()
-    for release in sorted(candidates, key=lambda item: (item["published_at"], item["id"]), reverse=True):
-        version = re.sub(r"^[vV]", "", release["tag_name"], count=1)
-        if not version or version in seen:
-            continue
-        assets = (
-            asset for asset in release["assets"]
-            if asset["name"].lower().endswith(".ipa") and config["assetRegex"].search(asset["name"])
-        )
-        # 一个 Release 只收录一个 IPA；有多个匹配时按文件名稳定选择。
-        asset = min(assets, key=lambda item: (item["name"].casefold(), item["name"]), default=None)
-        if asset is None:
-            continue
-        versions.append({
-            "version": version,
-            "date": release["published_at"][:10],
-            "localizedDescription": (release.get("body") or "")[:500],
-            "downloadURL": asset["browser_download_url"],
-            "size": asset["size"],
-        })
-        seen.add(version)
-        if len(versions) == config.get("maxVersions", 5):
-            break
-    if not versions:
-        raise ValueError("没有符合条件的 IPA Release")
-
-    app = {field: config[field] for field in APP_FIELDS}
-    for field in ("tintColor", "appPermissions"):
-        if field in config:
-            app[field] = config[field]
-    app["versions"] = versions
-    return app
 
 
 def markdown_cell(value):
@@ -124,16 +36,17 @@ def markdown_cell(value):
     return re.sub(r"([\\|`*_[\]<>~&])", r"\\\1", value)
 
 
-def render_readme(readme, entries):
+def render_readme(path, entries, headings, empty_label):
+    readme = path.read_bytes().decode("utf-8")
     if readme.count(TABLE_START) != 1 or readme.count(TABLE_END) != 1:
-        raise ValueError("README 应用表格标记缺失或重复")
+        raise ValueError(f"{path.name} 的应用表格标记缺失或重复")
     start = readme.index(TABLE_START) + len(TABLE_START)
     end = readme.index(TABLE_END)
     if start > end:
-        raise ValueError("README 应用表格标记顺序错误")
+        raise ValueError(f"{path.name} 的应用表格标记顺序错误")
 
     newline = "\r\n" if readme[start:].startswith("\r\n") else "\n"
-    rows = ["| 应用 | 最新版本 | 更新日期（UTC） | GitHub 仓库 |", "| --- | --- | --- | --- |"]
+    rows = ["| " + " | ".join(headings) + " |", "| --- | --- | --- | --- |"]
     for repo, app in entries:
         latest = app["versions"][0]
         rows.append(
@@ -141,7 +54,7 @@ def render_readme(readme, entries):
             f"{latest['date']} | [{markdown_cell(repo)}](https://github.com/{repo}) |"
         )
     if not entries:
-        rows.append("| 暂无应用 | — | — | — |")
+        rows.append(f"| {empty_label} |  |  |  |")
     return readme[:start] + newline * 2 + newline.join(rows) + newline * 2 + readme[end:]
 
 
@@ -153,34 +66,273 @@ def write_if_changed(path, content):
     return True
 
 
+def load_config(path):
+    configs = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(configs, list):
+        raise ValueError("apps.json 必须是 JSON 数组")
+
+    seen = set()
+    for i, config in enumerate(configs, 1):
+        if not isinstance(config, dict):
+            raise ValueError(f"apps.json 第 {i} 项必须是 JSON 对象")
+        allowed = {"repo", "channel", "tag", "assetPattern", "overrides"}
+        if unknown := config.keys() - allowed:
+            raise ValueError(f"apps.json 第 {i} 项有未知字段：{', '.join(sorted(unknown))}")
+        repo = config.get("repo")
+        if (
+            not isinstance(repo, str)
+            or not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9-]*/[A-Za-z0-9_.-]+", repo)
+            or repo.split("/")[1] in (".", "..")
+        ):
+            raise ValueError(f"apps.json 第 {i} 项的 repo 必须是 GitHub 的 owner/repo")
+        if repo.lower() in seen:
+            raise ValueError(f"仓库重复：{repo}。每个仓库只配置一次")
+        seen.add(repo.lower())
+        channel = config.get("channel", "stable")
+        if not isinstance(channel, str) or channel not in CHANNELS:
+            raise ValueError(f"{repo} 的 channel 可填：{', '.join(sorted(CHANNELS))}")
+        if "tag" in config and channel != "nightly":
+            raise ValueError(f"{repo} 只有 nightly 渠道可以填写 tag")
+        for key in ("tag", "assetPattern"):
+            if key in config and (not isinstance(config[key], str) or not config[key].strip()):
+                raise ValueError(f"{repo} 的 {key} 必须是非空字符串")
+        if "tag" in config and config["tag"] in (".", ".."):
+            raise ValueError(f"{repo} 的 tag 无效")
+        overrides = config.get("overrides", {})
+        if not isinstance(overrides, dict) or overrides.keys() - APP_FIELDS:
+            raise ValueError(f"{repo} 的 overrides 包含未知字段或格式无效")
+        for key, value in overrides.items():
+            if key == "entitlements":
+                if not isinstance(value, list) or not all(isinstance(e, str) and e.strip() for e in value):
+                    raise ValueError(f"{repo} 的 entitlements 必须是字符串数组")
+            elif not isinstance(value, str) or not value.strip():
+                raise ValueError(f"{repo} 的 {key} 必须是非空字符串")
+        if "iconURL" in overrides:
+            url = urlsplit(overrides["iconURL"])
+            if url.scheme != "https" or not url.hostname or url.username or url.password:
+                raise ValueError(f"{repo} 的 iconURL 必须是公开的 HTTPS 地址")
+        if "tintColor" in overrides and not re.fullmatch(r"#?[0-9a-fA-F]{6}", overrides["tintColor"]):
+            raise ValueError(f"{repo} 的 tintColor 必须是六位十六进制颜色")
+
+        config.setdefault("channel", "stable")
+        config.setdefault("assetPattern", "*.ipa")
+        config.setdefault("overrides", {})
+        if channel == "nightly":
+            config.setdefault("tag", "nightly")
+    return configs
+
+
+def github(repo, token, endpoint=""):
+    headers = {
+        "Accept": "application/vnd.github+json",
+        "User-Agent": "iDockHub",
+        "X-GitHub-Api-Version": "2022-11-28",
+    }
+    if token:
+        headers["Authorization"] = f"Bearer {token}"
+    request = Request(f"https://api.github.com/repos/{repo}{endpoint}", headers=headers)
+    with urlopen(request, timeout=15) as response:
+        return json.load(response)
+
+
+def fetch_releases(config, token):
+    repo, channel = config["repo"], config["channel"]
+    if channel == "latest":
+        return [github(repo, token, "/releases/latest")]
+    tag = config.get("tag", "")
+    if channel == "nightly" and not any(c in tag for c in "*?["):
+        return [github(repo, token, f"/releases/tags/{quote(tag, safe='')}")]
+
+    releases = []
+    page = 1
+    while True:
+        batch = github(repo, token, f"/releases?per_page=100&page={page}")
+        if not isinstance(batch, list):
+            raise ValueError("GitHub 返回的 Release 列表无效")
+        releases.extend(batch)
+        if len(batch) < 100:
+            return releases
+        page += 1
+
+
+def asset_fingerprint(asset):
+    # 同名资产可能被替换。使用 GitHub 记录区分不同的上传。
+    return json.dumps(
+        [asset["id"], asset["updated_at"], asset["size"], asset.get("digest")],
+        separators=(",", ":"),
+    )
+
+
+def select_assets(config, releases):
+    channel = config["channel"]
+    candidates = []
+    for release in releases:
+        if release["draft"] or not release["published_at"]:
+            continue
+        if channel in ("stable", "latest") and release["prerelease"]:
+            continue
+        if channel == "prerelease" and not release["prerelease"]:
+            continue
+        if channel == "nightly" and not fnmatchcase(release["tag_name"], config["tag"]):
+            continue
+        candidates.append(release)
+
+    for release in sorted(candidates, key=lambda item: (item["published_at"], item["id"]), reverse=True):
+        assets = [
+            asset for asset in release["assets"]
+            if asset.get("state") == "uploaded" and asset["name"].lower().endswith(".ipa")
+            and fnmatchcase(asset["name"].lower(), config["assetPattern"].lower())
+        ]
+        if len(assets) > 1:
+            names = "、".join(sorted(asset["name"] for asset in assets))
+            raise ValueError(f"{release['tag_name']} 匹配多个 IPA：{names}。请用 assetPattern 指定一个")
+        if assets:
+            yield release, assets[0]
+
+
+def build_app(config, token, old_assets):
+    repo = config["repo"]
+    details = github(repo, token)
+    if details.get("private"):
+        raise ValueError("仓库是私有的，订阅者无法下载 IPA")
+
+    from_cache = {}
+    versions, metadata, seen = [], [], set()
+    for release, asset in select_assets(config, fetch_releases(config, token)):
+        fingerprint = asset_fingerprint(asset)
+        info = old_assets.get(fingerprint)
+        if info is None:
+            print(f"正在检查 {config['repo']} 的 {asset['name']}。", flush=True)
+            info = inspect_asset(asset)
+        key = (info["version"], info["buildVersion"])
+        if key in seen:
+            continue
+        if metadata and metadata[0]["bundleIdentifier"] != info["bundleIdentifier"]:
+            raise ValueError("多个版本的 bundleIdentifier 不一致。请检查 assetPattern")
+        published = (asset["updated_at"] if config["channel"] == "nightly" else release["published_at"])[:10]
+        date.fromisoformat(published)
+        version = {
+            "version": info["version"],
+            "buildVersion": info["buildVersion"],
+            "date": published,
+            "localizedDescription": (release.get("body") or "")[:500],
+            "downloadURL": asset["browser_download_url"],
+            "size": asset["size"],
+        }
+        if "minOSVersion" in info:
+            version["minOSVersion"] = info["minOSVersion"]
+        versions.append(version)
+        metadata.append(info)
+        from_cache[fingerprint] = info
+        seen.add(key)
+        if len(versions) == MAX_VERSIONS:
+            break
+
+    if not versions:
+        raise ValueError("当前渠道没有匹配的 IPA。请检查 GitHub Release 和 assetPattern")
+
+    owner, repo_name = repo.split("/")
+    overrides = config["overrides"]
+    entitlements, privacy = set(overrides.get("entitlements", [])), {}
+    for info in reversed(metadata):
+        if info["needsEntitlementsOverride"] and "entitlements" not in overrides:
+            raise ValueError("IPA 权限只提供 DER 格式。请在 overrides.entitlements 中列出实际权限")
+        entitlements.update(info["entitlements"])
+        privacy.update(info["privacy"])
+    latest = metadata[0]
+    app = {
+        "name": overrides.get("name") or latest["name"] or repo_name,
+        "bundleIdentifier": latest["bundleIdentifier"],
+        "developerName": overrides.get("developerName", owner),
+        "localizedDescription": overrides.get("localizedDescription") or details.get("description") or repo_name,
+        "iconURL": overrides.get("iconURL") or details["owner"]["avatar_url"],
+        "appPermissions": {"entitlements": sorted(entitlements), "privacy": privacy},
+        "versions": versions,
+    }
+    if "tintColor" in overrides:
+        app["tintColor"] = overrides["tintColor"]
+    return app, from_cache
+
+
+def config_fingerprint(config):
+    data = json.dumps(config, sort_keys=True, separators=(",", ":")).encode()
+    return hashlib.sha256(data).hexdigest()
+
+
+def read_generated(path, default):
+    if not path.exists():
+        return default
+    data = json.loads(path.read_bytes())
+    if not isinstance(data, dict):
+        raise ValueError(f"{path.name} 必须包含 JSON 对象")
+    return data
+
+
+def transient(exc):
+    if isinstance(exc, HTTPError):
+        headers = exc.headers or {}
+        return exc.code in (408, 429) or 500 <= exc.code < 600 or (
+            exc.code == 403 and (
+                headers.get("X-RateLimit-Remaining") == "0" or headers.get("Retry-After") is not None
+            )
+        )
+    return isinstance(exc, OSError)
+
+
+def json_text(value):
+    return json.dumps(value, ensure_ascii=False, indent=2) + "\n"
+
+
 def main():
+    source_path, state_path = IPA_DIR / "source.json", IPA_DIR / ".sync-state.json"
     try:
         configs = load_config(IPA_DIR / "apps.json")
-        readme = README.read_bytes().decode("utf-8")
+        previous_state = read_generated(state_path, {})
+        previous_apps = {
+            app["bundleIdentifier"]: app for app in read_generated(source_path, {}).get("apps", [])
+        }
         token = os.environ.get("GITHUB_TOKEN", "").strip()
-        entries = []
+        entries, state, bundles = [], {}, set()
+        updated = 0
         for config in configs:
             repo = config["repo"]
+            signature = config_fingerprint(config)
+            old = previous_state.get(repo.lower(), {})
             try:
-                app = build_app(config, fetch_releases(repo, token))
+                app, cached = build_app(config, token, old.get("assets", {}))
+                if old.get("config") == signature and old["bundleIdentifier"] != app["bundleIdentifier"]:
+                    raise ValueError("上游 IPA 的应用标识已改变。请核对渠道和资产")
             except (OSError, ValueError, KeyError, TypeError) as exc:
-                print(f"警告：跳过 {repo}：{exc}", file=sys.stderr)
-                continue
-            entries.append((repo, app))
-            print(f"已获取 {app['name']} {app['versions'][0]['version']}，共 {len(app['versions'])} 个版本")
+                app = previous_apps.get(old.get("bundleIdentifier"))
+                if not (transient(exc) and old.get("config") == signature and app):
+                    print(f"警告：跳过 {repo}：{exc}", file=sys.stderr)
+                    continue
+                print(f"警告：暂时无法更新 {repo}，保留上次结果：{exc}", file=sys.stderr)
+                cached = old["assets"]
+            else:
+                updated += 1
+                print(f"已获取 {app['name']} {app['versions'][0]['version']}，共 {len(app['versions'])} 个版本。")
 
-        if configs and not entries:
-            print("错误：所有仓库均未获取到可用 IPA，保留现有软件源和 README。", file=sys.stderr)
+            bundle = app["bundleIdentifier"]
+            if bundle in bundles:
+                raise ValueError(f"应用标识重复：{bundle}。请保留一个对应的仓库")
+            bundles.add(bundle)
+            entries.append((repo, app))
+            state[repo.lower()] = {"config": signature, "bundleIdentifier": bundle, "assets": cached}
+
+        if configs and not updated:
+            print("错误：没有仓库完成同步。已保留现有软件源和文档。", file=sys.stderr)
             return 1
 
         source = {**SOURCE, "apps": [app for _, app in entries], "news": []}
-        new_readme = render_readme(readme, entries)
-        new_source = json.dumps(source, ensure_ascii=False, indent=2) + "\n"
-        source_changed = write_if_changed(IPA_DIR / "source.json", new_source)
-        readme_changed = write_if_changed(README, new_readme)
-        print("已更新软件源和应用列表。" if source_changed or readme_changed else "软件源和应用列表无变化。")
+        outputs = {source_path: json_text(source), state_path: json_text(state)}
+        for filename, labels in README_TABLES.items():
+            path = IPA_DIR.parent / filename
+            outputs[path] = render_readme(path, entries, *labels)
+        changed = [path.name for path, content in outputs.items() if write_if_changed(path, content)]
+        print("已更新：" + "、".join(changed) if changed else "软件源和文档无变化。")
         return 0
-    except (OSError, ValueError) as exc:
+    except (OSError, ValueError, KeyError, TypeError) as exc:
         print(f"错误：无法更新软件源：{exc}", file=sys.stderr)
         return 1
 

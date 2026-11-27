@@ -6,7 +6,11 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
-    paths: ["ipa/apps.json"]
+    paths:
+      - "ipa/apps.json"
+      - "ipa/update_source.py"
+      - "ipa/ipa_metadata.py"
+      - ".github/workflows/update-ipa-source.yml"
 
 permissions:
   contents: write
@@ -17,22 +21,23 @@ concurrency:
 jobs:
   update:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - name: 检出 main
         uses: actions/checkout@v6
         with:
           ref: main
 
-      - name: 生成 IPA 软件源
+      - name: 更新软件源和应用列表
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: python3 ipa/update_source.py
 
       - name: 提交并推送变更
         run: |
-          git add -- ipa/source.json README.md
+          git add -- ipa/source.json ipa/.sync-state.json README.md README.en.md
           if git diff --cached --quiet; then
-            echo "软件源和应用列表无变化。"
+            echo "生成文件无变化。"
             exit 0
           fi
 

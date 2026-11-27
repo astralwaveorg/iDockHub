@@ -1,23 +1,25 @@
 # iDockHub
 
-[![更新 IPA 软件源](https://github.com/astralwaveorg/iDockHub/actions/workflows/update-ipa-source.yml/badge.svg?branch=main)](https://github.com/astralwaveorg/iDockHub/actions/workflows/update-ipa-source.yml)
+[English](README.en.md) · [![更新 IPA 软件源](https://github.com/astralwaveorg/iDockHub/actions/workflows/update-ipa-source.yml/badge.svg?branch=main)](https://github.com/astralwaveorg/iDockHub/actions/workflows/update-ipa-source.yml)
 
-个人 iOS 资产中心。IPA 软件源每 3 小时检查一次上游 GitHub Releases，下载链接直指上游发布的 IPA。这里也预留了 iOS 脚本和快捷指令目录。
+iDockHub 为 LiveContainer 和 SideStore 提供开源 iOS 应用的软件源。下载链接指向上游 GitHub Release。每个应用最多保留 3 个版本。
 
-## 订阅 IPA 软件源
+## 订阅软件源
 
-**[打开订阅地址](https://raw.githubusercontent.com/astralwaveorg/iDockHub/main/ipa/source.json)**
+复制[软件源地址](https://raw.githubusercontent.com/astralwaveorg/iDockHub/main/ipa/source.json)：
 
 ```text
 https://raw.githubusercontent.com/astralwaveorg/iDockHub/main/ipa/source.json
 ```
 
-在 LiveContainer 中打开 **Sources**，或在 SideStore 中打开 **Browse → Sources**。点 **+**，粘贴上方地址并确认添加。
+1. 在 LiveContainer 中打开 **Sources**。如果用 SideStore，先打开 **Browse**，再点 **Sources**。
+2. 点 **+**，粘贴软件源地址。
+3. 确认添加。
 
 <details>
 <summary>客户端直达链接</summary>
 
-支持应用链接的环境可以用以下地址打开添加页面。GitHub README 会屏蔽这两种协议，在 GitHub 上请按上面的步骤订阅。
+GitHub README 不提供可点击的应用协议链接。在支持这些协议的环境中，可以用以下地址打开添加页面：
 
 ```text
 livecontainer://source?url=https%3A%2F%2Fraw.githubusercontent.com%2Fastralwaveorg%2FiDockHub%2Fmain%2Fipa%2Fsource.json
@@ -30,44 +32,60 @@ sidestore://source?url=https%3A%2F%2Fraw.githubusercontent.com%2Fastralwaveorg%2
 
 <!-- APPS_TABLE_START -->
 
-| 应用 | 最新版本 | 更新日期（UTC） | GitHub 仓库 |
+| 应用 | 最新版本 | 日期（UTC） | 上游仓库 |
 | --- | --- | --- | --- |
 | MoviePilot | 2.0.9 | 2026-11-27 | [jxxghp/MoviePilot-App](https://github.com/jxxghp/MoviePilot-App) |
 
 <!-- APPS_TABLE_END -->
 
-## 项目结构
+## 添加应用
 
-```text
-ipa/
-├── apps.json          # 维护要追踪的仓库与应用信息
-├── update_source.py   # 同步 GitHub Releases，生成软件源和上方表格
-└── source.json        # 供客户端订阅的生成文件
-scripts/               # 预留：iOS、代理分流与自动化脚本
-shortcuts/             # 预留：iOS 快捷指令与使用说明
+打开 [`ipa/apps.json`](ipa/apps.json)，在数组中加入一条。仓库须公开，并在 GitHub Release 中提供可直接下载的 `.ipa` 文件。
+
+```json
+{ "repo": "jxxghp/MoviePilot-App" }
 ```
 
-## 维护与扩展
+这条配置追踪 MoviePilot 的稳定版。清单里已有 MoviePilot，新增时请把示例中的仓库名换成你的 `owner/repo`。脚本从 IPA 读取应用标识、名称、版本、构建号和权限。未指定图标时，使用 GitHub 仓库所有者的头像。
 
-在 [`ipa/apps.json`](ipa/apps.json) 的 JSON 数组中新增一项。应用仓库应公开可访问，并把 `.ipa` 文件上传为 GitHub Release 资产。
+| 发布方式 | 配置 | 收录规则 |
+| --- | --- | --- |
+| 稳定版 | 省略 `channel`，或填 `"stable"` | 跳过预发行版和没有匹配 IPA 的 Release。按发布时间保留最近 3 个。 |
+| GitHub 最新发布 | `"channel": "latest"` | 只查看 GitHub 的 `/releases/latest`。该 Release 没有匹配的 IPA 时，报告错误。 |
+| 滚动夜版 | `"channel": "nightly"` | 默认追踪 `nightly` 标签。用 `"tag": "dev"` 可改用其他固定标签。固定标签只保留当前 IPA。 |
+| 每次新建夜版标签 | `"channel": "nightly", "tag": "nightly-*"` | 匹配标签后按发布时间收录最近 3 个。 |
+| 预发行版 | `"channel": "prerelease"` | 只收录 GitHub 标为预发行的 Release，最多 3 个。 |
 
-| 字段 | 填写方法 |
-| --- | --- |
-| `repo` | GitHub 的 `owner/repo`，例如 `jxxghp/MoviePilot-App`。 |
-| `name`、`developerName`、`localizedDescription` | 应用名称、开发者名称、简介。 |
-| `bundleIdentifier` | IPA 内 `Info.plist` 的 `CFBundleIdentifier`，每个应用必须唯一。 |
-| `iconURL`、`tintColor` | 公开可访问的图标 URL；可选主题色，例如 `#5E5CE6`。 |
-| `appPermissions` | 应用有权限时，按 IPA 内实际使用的权限填写 `privacy` 和 `entitlements`，供客户端在安装前核对。 |
-| `assetRegex` | 匹配 IPA 文件名的正则表达式，不区分大小写。JSON 中默认为 `"\\.ipa$"`。若一个 Release 有多个 IPA，可用 `"-ios-unsigned\\.ipa$"` 指定所需版本；仍有多个匹配时按文件名选第一个。 |
-| `includePrerelease` | 默认 `false`；设为 `true` 可收录预发行版。草稿始终跳过。 |
-| `maxVersions` | 每个应用最多保留的版本数，默认 `5`，按发布时间从新到旧排列。 |
+夜版也必须发布为 GitHub Release 资产。脚本不收录 Actions 临时产物。滚动夜版沿用应用包内的版本号和构建号，上游未修改它们时，客户端可能不会提示更新。夜版表格显示当前 IPA 的更新时间。
 
-将 `ipa/apps.json` 的变更推送到 `main` 后，GitHub Actions 会自动运行。也可以在 [Actions](https://github.com/astralwaveorg/iDockHub/actions/workflows/update-ipa-source.yml) 中点击 **Run workflow** 手动触发。生成结果有变化时，工作流才会提交。
+通常只要填仓库和渠道。遇到以下情况时，再加字段：
 
-本地在仓库根目录运行：
+- 同一 Release 有多个 IPA：加 `"assetPattern": "*-ios-unsigned.ipa"` 选定一个。文件名匹配不区分大小写。
+- 需要自定义展示信息：在 `overrides` 中填 `name`、`developerName`、`localizedDescription`、`iconURL` 或 `tintColor`。
+- 脚本报告无法读取签名中的权限：核对实际权限，并在 `overrides.entitlements` 中列出权限键。
+
+每个仓库只配置一次。同一个应用标识也只能出现一次。从清单中删掉一条，下一次成功同步时就会移除该应用。
+
+## 运行同步
+
+GitHub Actions 每 3 小时安排一次同步。推送清单或同步脚本的变更到 `main` 也会触发同步。需要立即运行时，在 [Actions](https://github.com/astralwaveorg/iDockHub/actions/workflows/update-ipa-source.yml) 中点 **Run workflow**。
+
+在仓库根目录运行以下命令。需要 Python 3.9 或更高版本，无需安装依赖。可以通过环境变量 `GITHUB_TOKEN` 向 GitHub API 鉴权。
 
 ```bash
 python3 ipa/update_source.py
 ```
 
-脚本仅使用 Python 3 标准库。如已在环境中设置 `GITHUB_TOKEN`，脚本会用它向 GitHub API 鉴权；未设置时也可读取公开仓库。单个仓库拉取失败或没有符合条件的 IPA 时，本次生成会跳过该仓库；如果配置非空且全部失败，脚本会保留现有文件并以非零状态退出。请修改 `apps.json`，由脚本重新生成软件源和应用表格。
+脚本生成软件源、两份应用表和 IPA 检查缓存。工作流只在生成文件有变化时提交。如果上游暂时无法访问，且该应用的配置没变，脚本会保留上次的结果。如果没有仓库完成同步，脚本会报错并保留现有文件。遇到匹配错误时，查看日志中的仓库名和原因，再改清单。
+
+## 目录
+
+| 路径 | 用途 |
+| --- | --- |
+| [`ipa/apps.json`](ipa/apps.json) | 手动维护的应用清单 |
+| [`ipa/source.json`](ipa/source.json) | 生成的软件源 |
+| `ipa/.sync-state.json` | 生成的缓存，避免重复下载同一个 IPA |
+| [`ipa/update_source.py`](ipa/update_source.py) | 同步 Release 并更新软件源和文档 |
+| [`ipa/ipa_metadata.py`](ipa/ipa_metadata.py) | 读取 IPA 中的版本和权限信息 |
+| [`scripts/`](scripts/) | 预留给 iOS、代理配置和自动化脚本 |
+| [`shortcuts/`](shortcuts/) | 预留给 iOS 快捷指令 |

@@ -1,0 +1,68 @@
+{
+  "jxxghp/moviepilot-app": {
+    "config": "7013395d9a47e690a37fe62b9cd4e05225308c897d997202b69930ced5daea94",
+    "bundleIdentifier": "com.moviepilot.app",
+    "assets": {
+      "[799772407,\"2026-11-27T09:09:59Z\",51682733,\"sha256:ecbd6534670fb3ebf39f29e4536656b353ed44b979faf2a0b1238465d73821c0\"]": {
+        "bundleIdentifier": "com.moviepilot.app",
+        "version": "2.0.9",
+        "buildVersion": "1",
+        "name": "MoviePilot",
+        "minOSVersion": "16.0",
+        "privacy": {
+          "NSCameraUsageDescription": "在 MoviePilot 网页、扫码与插件中使用相机拍照或识别二维码。",
+          "NSFaceIDUsageDescription": "用于验证你的身份以授权敏感操作或插件安全能力。",
+          "NSLocalNetworkUsageDescription": "连接你在局域网中配置的 MoviePilot 服务。",
+          "NSMicrophoneUsageDescription": "在智能助手与插件中录制语音消息或音频时使用麦克风。",
+          "NSPhotoLibraryAddUsageDescription": "将你选择保存的智能助手或插件图片存入照片图库。",
+          "NSPhotoLibraryUsageDescription": "在 MoviePilot 网页与插件中选择要上传的照片或视频。"
+        },
+        "entitlements": [
+          "aps-environment",
+          "com.apple.security.application-groups"
+        ],
+        "needsEntitlementsOverride": false
+      },
+      "[798817336,\"2026-11-27T03:33:42Z\",51640679,\"sha256:3fd828e351e349df049a713809cac884c7bd9c04510a7680f0a6776fc5d8f45f\"]": {
+        "bundleIdentifier": "com.moviepilot.app",
+        "version": "2.0.8",
+        "buildVersion": "1",
+        "name": "MoviePilot",
+        "minOSVersion": "16.0",
+        "privacy": {
+          "NSCameraUsageDescription": "在 MoviePilot 网页、扫码与插件中使用相机拍照或识别二维码。",
+          "NSFaceIDUsageDescription": "用于验证你的身份以授权敏感操作或插件安全能力。",
+          "NSLocalNetworkUsageDescription": "连接你在局域网中配置的 MoviePilot 服务。",
+          "NSMicrophoneUsageDescription": "在智能助手与插件中录制语音消息或音频时使用麦克风。",
+          "NSPhotoLibraryAddUsageDescription": "将你选择保存的智能助手或插件图片存入照片图库。",
+          "NSPhotoLibraryUsageDescription": "在 MoviePilot 网页与插件中选择要上传的照片或视频。"
+        },
+        "entitlements": [
+          "aps-environment",
+          "com.apple.security.application-groups"
+        ],
+        "needsEntitlementsOverride": false
+      },
+      "[798270476,\"2026-11-27T00:21:35Z\",51600908,\"sha256:7842c741c1d73edbfc83707c5fd3585ecccbfdcfe59356fd30e159cb13b3ba20\"]": {
+        "bundleIdentifier": "com.moviepilot.app",
+        "version": "2.0.7",
+        "buildVersion": "1",
+        "name": "MoviePilot",
+        "minOSVersion": "16.0",
+        "privacy": {
+          "NSCameraUsageDescription": "在 MoviePilot 网页、扫码与插件中使用相机拍照或识别二维码。",
+          "NSFaceIDUsageDescription": "用于验证你的身份以授权敏感操作或插件安全能力。",
+          "NSLocalNetworkUsageDescription": "连接你在局域网中配置的 MoviePilot 服务。",
+          "NSMicrophoneUsageDescription": "在智能助手与插件中录制语音消息或音频时使用麦克风。",
+          "NSPhotoLibraryAddUsageDescription": "将你选择保存的智能助手或插件图片存入照片图库。",
+          "NSPhotoLibraryUsageDescription": "在 MoviePilot 网页与插件中选择要上传的照片或视频。"
+        },
+        "entitlements": [
+          "aps-environment",
+          "com.apple.security.application-groups"
+        ],
+        "needsEntitlementsOverride": false
+      }
+    }
+  }
+}
