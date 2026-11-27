@@ -1,0 +1,25 @@
+[
+  {
+    "repo": "jxxghp/MoviePilot-App",
+    "name": "MoviePilot",
+    "bundleIdentifier": "com.moviepilot.app",
+    "developerName": "jxxghp",
+    "localizedDescription": "MoviePilot iOS 客户端，NAS 媒体库自动化管理工具。",
+    "iconURL": "https://raw.githubusercontent.com/jxxghp/MoviePilot-Frontend/main/public/logo.png",
+    "tintColor": "#5E5CE6",
+    "appPermissions": {
+      "entitlements": [],
+      "privacy": {
+        "NSCameraUsageDescription": "拍照和扫描二维码。",
+        "NSFaceIDUsageDescription": "验证敏感操作。",
+        "NSLocalNetworkUsageDescription": "连接局域网中的 MoviePilot 服务。",
+        "NSMicrophoneUsageDescription": "录制语音和音频。",
+        "NSPhotoLibraryAddUsageDescription": "保存用户选择的图片。",
+        "NSPhotoLibraryUsageDescription": "选择要上传的照片和视频。"
+      }
+    },
+    "assetRegex": "\\.ipa$",
+    "includePrerelease": false,
+    "maxVersions": 5
+  }
+]

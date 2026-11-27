@@ -1,0 +1,42 @@
+name: 更新 IPA 软件源
+
+on:
+  schedule:
+    - cron: "0 */3 * * *"
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ["ipa/apps.json"]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-ipa-source-main
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出 main
+        uses: actions/checkout@v6
+        with:
+          ref: main
+
+      - name: 生成 IPA 软件源
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python3 ipa/update_source.py
+
+      - name: 提交并推送变更
+        run: |
+          git add -- ipa/source.json README.md
+          if git diff --cached --quiet; then
+            echo "软件源和应用列表无变化。"
+            exit 0
+          fi
+
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'chore(ipa): auto update source.json'
+          git push origin HEAD:main
