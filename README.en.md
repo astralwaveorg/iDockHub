@@ -2,19 +2,21 @@
 
 [简体中文](README.md) · [![Update the IPA source](https://github.com/astralwaveorg/iDockHub/actions/workflows/update-ipa-source.yml/badge.svg?branch=main)](https://github.com/astralwaveorg/iDockHub/actions/workflows/update-ipa-source.yml)
 
-iDockHub lists iOS apps for LiveContainer and SideStore. Each download comes from a GitHub Release or the publisher's own source. iDockHub keeps up to three versions per app.
+iDockHub combines GitHub Releases and publisher sources in one subscription for LiveContainer and SideStore. It keeps up to three versions per app. The IPA files stay with their original hosts.
 
 ## Add the source
 
-Copy the [source URL](https://raw.githubusercontent.com/astralwaveorg/iDockHub/main/ipa/source.json):
+Copy the [jsDelivr URL](https://cdn.jsdelivr.net/gh/astralwaveorg/iDockHub@main/ipa/source.json) to load the source through the CDN:
 
 ```text
-https://raw.githubusercontent.com/astralwaveorg/iDockHub/main/ipa/source.json
+https://cdn.jsdelivr.net/gh/astralwaveorg/iDockHub@main/ipa/source.json
 ```
 
 1. Open **Sources** in LiveContainer. In SideStore, open **Browse** first, then tap **Sources**.
 2. Tap **+** and paste the source URL.
 3. Confirm that you want to add the source.
+
+Use the [GitHub Raw URL](https://raw.githubusercontent.com/astralwaveorg/iDockHub/main/ipa/source.json) if the CDN is unavailable or still shows an older copy.
 
 <details>
 <summary>Links that open the apps</summary>
@@ -22,8 +24,8 @@ https://raw.githubusercontent.com/astralwaveorg/iDockHub/main/ipa/source.json
 GitHub README files do not make app protocol links clickable. Use these URLs in an app that supports them:
 
 ```text
-livecontainer://source?url=https%3A%2F%2Fraw.githubusercontent.com%2Fastralwaveorg%2FiDockHub%2Fmain%2Fipa%2Fsource.json
-sidestore://source?url=https%3A%2F%2Fraw.githubusercontent.com%2Fastralwaveorg%2FiDockHub%2Fmain%2Fipa%2Fsource.json
+livecontainer://source?url=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fastralwaveorg%2FiDockHub%40main%2Fipa%2Fsource.json
+sidestore://source?url=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fastralwaveorg%2FiDockHub%40main%2Fipa%2Fsource.json
 ```
 
 </details>
@@ -32,12 +34,16 @@ sidestore://source?url=https%3A%2F%2Fraw.githubusercontent.com%2Fastralwaveorg%2
 
 <!-- APPS_TABLE_START -->
 
-| App | Latest version | Date (UTC) | Upstream repository |
-| --- | --- | --- | --- |
-| MoviePilot | 2.0.9 | 2026-11-27 | [jxxghp/MoviePilot-App](https://github.com/jxxghp/MoviePilot-App) |
-| uYouEnhanced | 21.20.4 | 2026-10-09 | [arichornlover/uYouEnhanced](https://github.com/arichornlover/uYouEnhanced) |
+| App | Latest version | Devices | Date (UTC) | Upstream |
+| --- | --- | --- | --- | --- |
+| MoviePilot | 2.0.9 | iPhone / iPad | 2026-11-27 | [GitHub Releases](https://github.com/jxxghp/MoviePilot-App/releases) |
+| uYouEnhanced | 21.20.4 | iPhone / iPad | 2026-10-09 | [Publisher source](https://raw.githubusercontent.com/arichornlover/arichornlover.github.io/main/apps.json) |
+| iTorrent | 2.2.0 | iPhone / iPad | 2026-07-19 | [GitHub Releases](https://github.com/XITRIX/iTorrent/releases) |
+| PiliNara | 2.2.0 | iPhone / iPad | 2026-11-09 | [GitHub Releases](https://github.com/Starfallan/PiliNara/releases) |
 
 <!-- APPS_TABLE_END -->
+
+The same subscription lists iPhone and iPad apps. The device column applies to the latest version. For GitHub releases, the script reads device support from the IPA. Imported apps show as unverified until someone checks their device support. Apple TV uses tvOS and requires a separate package and installation method. This source does not list tvOS apps.
 
 ## Add an app
 
@@ -65,13 +71,25 @@ The repository and channel usually suffice. Add these fields when you need them:
 - To change how the app appears, set `name`, `developerName`, `localizedDescription`, `iconURL`, or `tintColor` under `overrides`.
 - If the script cannot read the permissions in the signature, check the actual permissions. List their keys in `overrides.entitlements`.
 
-List each repository once. Each app ID must be unique. If you remove an entry, the next successful sync removes that app from the source.
-
 ### Import from the publisher's source
 
-If a publisher lists IPA files in its own source, use `sourceURL`. Use the publisher's GitHub Pages URL or a raw GitHub file from the same account. If the source lists several apps, set `bundleIdentifier` to select one. Omit `channel` for this type of entry.
+Use `sourceURL` to import an app. This is the entry for uYouEnhanced:
 
-uYouEnhanced uses this method. The script keeps the publisher's version and permission records. It checks that the download URL returns an IPA. It supports IPA files on GitHub and the Internet Archive.
+```json
+{
+  "repo": "arichornlover/uYouEnhanced",
+  "sourceURL": "https://raw.githubusercontent.com/arichornlover/arichornlover.github.io/main/apps.json",
+  "bundleIdentifier": "com.google.ios.youtube",
+  "devices": ["iPhone", "iPad"]
+}
+```
+
+- If the source lists one app, you can omit `bundleIdentifier`. To import several apps from one source, add an entry for each app and specify its app ID. Each app ID in the output must be unique.
+- The script accepts AltStore-style `versions` arrays and older entries with `version`, `versionDate`, and `downloadURL` on the app itself. It resolves relative URLs against the source URL. Omit `channel`, `tag`, and `assetPattern` for these entries.
+- The source and downloads must use HTTPS. GitHub Releases, the Internet Archive, and the publisher's source host work by default. For other download hosts, list each domain in `downloadHosts`, for example `"downloadHosts": ["cdn.example.org"]`. The same rules apply to redirects.
+- After you check device support, you can set `"devices": ["iPhone", "iPad"]`. This field changes the app table. It does not change which devices can install the app.
+
+The script checks the file header and size and skips expired downloads. If an old source omits permissions, a client that checks them may refuse to install the app. To remove an app from the source, delete its entry from the app list.
 
 ## Run the sync
 
@@ -92,8 +110,9 @@ The script generates the source, both app tables, and a cache of IPA metadata. T
 | [`ipa/apps.json`](ipa/apps.json) | App list that you edit |
 | [`ipa/source.json`](ipa/source.json) | Generated source |
 | `ipa/.sync-state.json` | Generated cache that prevents repeat IPA downloads |
-| [`ipa/update_source.py`](ipa/update_source.py) | Sync releases and update the source and app tables |
-| [`ipa/ipa_metadata.py`](ipa/ipa_metadata.py) | Read the version and permissions from an IPA |
+| [`ipa/update_source.py`](ipa/update_source.py) | Read the app list, combine both inputs, and update the source and tables |
+| [`ipa/github_release.py`](ipa/github_release.py) | Select GitHub releases and their IPA files |
+| [`ipa/ipa_metadata.py`](ipa/ipa_metadata.py) | Read the version, devices, and permissions from an IPA |
 | [`ipa/publisher_source.py`](ipa/publisher_source.py) | Import a publisher's source and check downloads |
 | [`scripts/`](scripts/) | Reserved for iOS, proxy configuration, and automation scripts |
 | [`shortcuts/`](shortcuts/) | Reserved for iOS shortcuts |

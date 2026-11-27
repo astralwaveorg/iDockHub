@@ -129,6 +129,19 @@ def read_plist(archive, path):
     return plist
 
 
+def mobile_devices(app):
+    supported = app.get("CFBundleSupportedPlatforms")
+    platform = app.get("DTPlatformName", "")
+    families = app.get("UIDeviceFamily", [])
+    if (
+        (supported and "iPhoneOS" not in supported)
+        or (platform and platform != "iphoneos")
+        or (families and not any(family in (1, 2) for family in families))
+    ):
+        raise ValueError("该 IPA 不适用于 iPhone 或 iPad。请用 assetPattern 选择 iOS 资产")
+    return [device for family, device in ((1, "iPhone"), (2, "iPad")) if family in families]
+
+
 def read_ipa(file):
     with ZipFile(file) as archive:
         names = archive.namelist()
@@ -152,6 +165,7 @@ def read_ipa(file):
         )
         if isinstance(app.get("MinimumOSVersion"), str) and app["MinimumOSVersion"]:
             version["minOSVersion"] = app["MinimumOSVersion"]
+        version["devices"] = mobile_devices(app)
 
         entitlements, privacy, needs_override = set(), {}, False
         bundles = [main[0], *sorted(

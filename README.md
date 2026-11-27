@@ -2,19 +2,21 @@
 
 [English](README.en.md) · [![更新 IPA 软件源](https://github.com/astralwaveorg/iDockHub/actions/workflows/update-ipa-source.yml/badge.svg?branch=main)](https://github.com/astralwaveorg/iDockHub/actions/workflows/update-ipa-source.yml)
 
-iDockHub 为 LiveContainer 和 SideStore 提供 iOS 应用的软件源。下载链接来自上游 GitHub Release 或项目维护者的软件源。每个应用最多保留 3 个版本。
+iDockHub 把 GitHub Releases 和应用发布者的软件源汇到同一个订阅地址，供 LiveContainer 和 SideStore 使用。每个应用最多保留 3 个版本，IPA 仍由上游提供。
 
 ## 订阅软件源
 
-复制[软件源地址](https://raw.githubusercontent.com/astralwaveorg/iDockHub/main/ipa/source.json)：
+复制 [jsDelivr 加速地址](https://cdn.jsdelivr.net/gh/astralwaveorg/iDockHub@main/ipa/source.json)：
 
 ```text
-https://raw.githubusercontent.com/astralwaveorg/iDockHub/main/ipa/source.json
+https://cdn.jsdelivr.net/gh/astralwaveorg/iDockHub@main/ipa/source.json
 ```
 
 1. 在 LiveContainer 中打开 **Sources**。如果用 SideStore，先打开 **Browse**，再点 **Sources**。
 2. 点 **+**，粘贴软件源地址。
 3. 确认添加。
+
+如果 CDN 暂不可用，或需要绕过 CDN 缓存查看更新，请用 [GitHub Raw 备用地址](https://raw.githubusercontent.com/astralwaveorg/iDockHub/main/ipa/source.json)。
 
 <details>
 <summary>客户端直达链接</summary>
@@ -22,8 +24,8 @@ https://raw.githubusercontent.com/astralwaveorg/iDockHub/main/ipa/source.json
 GitHub README 不提供可点击的应用协议链接。在支持这些协议的环境中，可以用以下地址打开添加页面：
 
 ```text
-livecontainer://source?url=https%3A%2F%2Fraw.githubusercontent.com%2Fastralwaveorg%2FiDockHub%2Fmain%2Fipa%2Fsource.json
-sidestore://source?url=https%3A%2F%2Fraw.githubusercontent.com%2Fastralwaveorg%2FiDockHub%2Fmain%2Fipa%2Fsource.json
+livecontainer://source?url=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fastralwaveorg%2FiDockHub%40main%2Fipa%2Fsource.json
+sidestore://source?url=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2Fastralwaveorg%2FiDockHub%40main%2Fipa%2Fsource.json
 ```
 
 </details>
@@ -32,12 +34,16 @@ sidestore://source?url=https%3A%2F%2Fraw.githubusercontent.com%2Fastralwaveorg%2
 
 <!-- APPS_TABLE_START -->
 
-| 应用 | 最新版本 | 日期（UTC） | 上游仓库 |
-| --- | --- | --- | --- |
-| MoviePilot | 2.0.9 | 2026-11-27 | [jxxghp/MoviePilot-App](https://github.com/jxxghp/MoviePilot-App) |
-| uYouEnhanced | 21.20.4 | 2026-10-09 | [arichornlover/uYouEnhanced](https://github.com/arichornlover/uYouEnhanced) |
+| 应用 | 最新版本 | 设备 | 日期（UTC） | 上游 |
+| --- | --- | --- | --- | --- |
+| MoviePilot | 2.0.9 | iPhone / iPad | 2026-11-27 | [GitHub Releases](https://github.com/jxxghp/MoviePilot-App/releases) |
+| uYouEnhanced | 21.20.4 | iPhone / iPad | 2026-10-09 | [作者源](https://raw.githubusercontent.com/arichornlover/arichornlover.github.io/main/apps.json) |
+| iTorrent | 2.2.0 | iPhone / iPad | 2026-07-19 | [GitHub Releases](https://github.com/XITRIX/iTorrent/releases) |
+| PiliNara | 2.2.0 | iPhone / iPad | 2026-11-09 | [GitHub Releases](https://github.com/Starfallan/PiliNara/releases) |
 
 <!-- APPS_TABLE_END -->
+
+同一个订阅包含 iPhone 和 iPad 应用。表里的设备对应最新版本：直接发布的 IPA 以包内声明为准；导入的应用没有核对过设备时，会标为「未确认」。Apple TV 使用 tvOS，需要单独的包和安装方式，当前订阅不收录。
 
 ## 添加应用
 
@@ -65,13 +71,25 @@ sidestore://source?url=https%3A%2F%2Fraw.githubusercontent.com%2Fastralwaveorg%2
 - 需要自定义展示信息：在 `overrides` 中填 `name`、`developerName`、`localizedDescription`、`iconURL` 或 `tintColor`。
 - 脚本报告无法读取签名中的权限：核对实际权限，并在 `overrides.entitlements` 中列出权限键。
 
-每个仓库只配置一次。同一个应用标识也只能出现一次。从清单中删掉一条，下一次成功同步时就会移除该应用。
+### 从发布者的软件源导入
 
-### 从维护者的软件源添加
+通过 `sourceURL` 导入某个应用。下面是 uYouEnhanced 的实际配置：
 
-如果维护者通过自己的软件源发布 IPA，而 GitHub Release 没有附件，可以用 `sourceURL` 导入。填写维护者的 GitHub Pages 地址或同一账号下的 GitHub 原始文件地址。软件源有多个应用时，加 `bundleIdentifier` 指定一个。此方式不需要 `channel`。
+```json
+{
+  "repo": "arichornlover/uYouEnhanced",
+  "sourceURL": "https://raw.githubusercontent.com/arichornlover/arichornlover.github.io/main/apps.json",
+  "bundleIdentifier": "com.google.ios.youtube",
+  "devices": ["iPhone", "iPad"]
+}
+```
 
-uYouEnhanced 使用这种方式。脚本保留发布者提供的版本和权限信息，并检查下载地址能否返回 IPA。当前支持托管在 GitHub 或 Internet Archive 的 IPA。
+- 源里只有一个应用时，可省略 `bundleIdentifier`。如果想从同一个源导入多个应用，每个应用各写一条，分别指定它的标识。输出源里的应用标识必须唯一。
+- 支持 AltStore 风格的 `versions` 数组，以及把 `version`、`versionDate` 和 `downloadURL` 直接放在应用对象里的旧版格式。相对地址以软件源地址为准。此方式不填 `channel`、`tag` 或 `assetPattern`。
+- 软件源和下载都用 HTTPS。GitHub Releases、Internet Archive 和软件源所在站点可以直接用。其他 CDN 需明确列出域名，例如 `"downloadHosts": ["cdn.example.org"]`。重定向也按相同规则检查。
+- 确认设备支持后，可以写 `"devices": ["iPhone", "iPad"]`。这个字段只影响应用表，不控制客户端的安装兼容性。
+
+脚本会检查下载地址的文件头和大小，跳过已经失效的版本。如果旧源没有权限信息，要求校验权限的客户端仍可能拒绝安装。要停止收录某个应用，从清单中删除对应条目即可。
 
 ## 运行同步
 
@@ -92,8 +110,9 @@ python3 ipa/update_source.py
 | [`ipa/apps.json`](ipa/apps.json) | 手动维护的应用清单 |
 | [`ipa/source.json`](ipa/source.json) | 生成的软件源 |
 | `ipa/.sync-state.json` | 生成的缓存，避免重复下载同一个 IPA |
-| [`ipa/update_source.py`](ipa/update_source.py) | 同步 Release 并更新软件源和文档 |
-| [`ipa/ipa_metadata.py`](ipa/ipa_metadata.py) | 读取 IPA 中的版本和权限信息 |
-| [`ipa/publisher_source.py`](ipa/publisher_source.py) | 导入维护者的软件源并检查下载地址 |
+| [`ipa/update_source.py`](ipa/update_source.py) | 读取清单，汇总两个来源，更新软件源和应用表 |
+| [`ipa/github_release.py`](ipa/github_release.py) | 选择 GitHub Release 渠道和 IPA |
+| [`ipa/ipa_metadata.py`](ipa/ipa_metadata.py) | 读取 IPA 的版本、设备和权限 |
+| [`ipa/publisher_source.py`](ipa/publisher_source.py) | 导入发布者的软件源，检查下载地址 |
 | [`scripts/`](scripts/) | 预留给 iOS、代理配置和自动化脚本 |
 | [`shortcuts/`](shortcuts/) | 预留给 iOS 快捷指令 |

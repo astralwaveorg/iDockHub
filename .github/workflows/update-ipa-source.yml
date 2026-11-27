@@ -9,6 +9,7 @@ on:
     paths:
       - "ipa/apps.json"
       - "ipa/update_source.py"
+      - "ipa/github_release.py"
       - "ipa/ipa_metadata.py"
       - "ipa/publisher_source.py"
       - ".github/workflows/update-ipa-source.yml"

@@ -10,6 +10,14 @@
   {
     "repo": "arichornlover/uYouEnhanced",
     "sourceURL": "https://raw.githubusercontent.com/arichornlover/arichornlover.github.io/main/apps.json",
-    "bundleIdentifier": "com.google.ios.youtube"
+    "bundleIdentifier": "com.google.ios.youtube",
+    "devices": ["iPhone", "iPad"]
+  },
+  {
+    "repo": "XITRIX/iTorrent"
+  },
+  {
+    "repo": "Starfallan/PiliNara",
+    "assetPattern": "PiliNara_ios_*.ipa"
   }
 ]

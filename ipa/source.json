@@ -116,6 +116,96 @@
           "minOSVersion": "16.0"
         }
       ]
+    },
+    {
+      "name": "iTorrent",
+      "bundleIdentifier": "com.xitrix.iTorrent2",
+      "developerName": "XITRIX",
+      "localizedDescription": "Torrent client for iOS 16+",
+      "iconURL": "https://avatars.githubusercontent.com/u/9553519?v=4",
+      "appPermissions": {
+        "entitlements": [
+          "com.apple.security.application-groups",
+          "get-task-allow"
+        ],
+        "privacy": {
+          "NSLocalNetworkUsageDescription": "iTorrent uses the local network to discover playback devices and cast video on your network."
+        }
+      },
+      "versions": [
+        {
+          "version": "2.2.0",
+          "buildVersion": "1",
+          "date": "2026-07-19",
+          "localizedDescription": "## What's new:\r\n* Meet the new built-in VLC player. Play compatible video and audio files directly in iTorrent, even while they are still downloading.\r\n* Enjoy Picture in Picture, playback speeds from 0.5x to 2x, audio and subtitle track selection, precise seeking, and system media controls.\r\n* Take playback to a bigger screen with AirPlay or a compatible player discovered on your local network.\r\n* Choose how pieces are downloaded with Sequential and First & Last priority modes, making it easier",
+          "downloadURL": "https://github.com/XITRIX/iTorrent/releases/download/v2.2.0-1/iTorrent.ipa",
+          "size": 24288935,
+          "minOSVersion": "16.0"
+        },
+        {
+          "version": "2.1.1",
+          "buildVersion": "1",
+          "date": "2025-12-18",
+          "localizedDescription": "## What’s new\r\n* Import/Export of RSS channels\r\n\r\n## Improvements\r\n* Files thumbnails now looks properly\r\n* Minor UI changes\r\n\r\n## Fixes\r\n* HTTPS trackers now works!\r\n* App crash on launch fixed\r\n* RSS magnet links now works\r\n\r\n**Full Changelog**: https://github.com/XITRIX/iTorrent/compare/v2.1.0-1...v2.1.1-1",
+          "downloadURL": "https://github.com/XITRIX/iTorrent/releases/download/v2.1.1-1/iTorrent.ipa",
+          "size": 8362011,
+          "minOSVersion": "16.0"
+        },
+        {
+          "version": "2.1.0",
+          "buildVersion": "1",
+          "date": "2025-10-25",
+          "localizedDescription": "## What’s new\r\n* iOS 26 Support, iTorrent fully adopted new Liquid Glass design\r\n* LibTorrent updated to version 2.0.11\r\n* On first launch, app will ask if you'd like to use Cellular connection, instead of disabling it by default\r\n* Added German localization by @soebbing in https://github.com/XITRIX/iTorrent/pull/369\r\n* Added Italian localization by @fraucs in https://github.com/XITRIX/iTorrent/pull/385\r\n* Added Polish localization by @yaptx in https://github.com/XITRIX/iTorrent/pull/391\r\n* Adde",
+          "downloadURL": "https://github.com/XITRIX/iTorrent/releases/download/v2.1.0-1/iTorrent.ipa",
+          "size": 7092275,
+          "minOSVersion": "16.0"
+        }
+      ]
+    },
+    {
+      "name": "PiliNara",
+      "bundleIdentifier": "com.example.pilinara",
+      "developerName": "Starfallan",
+      "localizedDescription": "PiliPlus 的第三方Fork版本，做了一些自用改动",
+      "iconURL": "https://avatars.githubusercontent.com/u/36763490?v=4",
+      "appPermissions": {
+        "entitlements": [],
+        "privacy": {
+          "NSAppleMusicUsageDescription": "App需要您的同意,才能访问媒体资料库",
+          "NSCameraUsageDescription": "App需要您的同意,才能访问相册",
+          "NSLocalNetworkUsageDescription": "需要访问本地网络以发现和连接 DLNA 投屏设备",
+          "NSPhotoLibraryUsageDescription": "请允许APP保存图片到相册"
+        }
+      },
+      "versions": [
+        {
+          "version": "2.2.0",
+          "buildVersion": "6231",
+          "date": "2026-11-09",
+          "localizedDescription": "⚠️ New MPV 说明：仅替换 MPV，解码器为原生 DX11 硬解（非 DX11 copy），效率更高；上游已回退，维护有限，可能存在问题，请自行斟酌。\r\n\r\n## 2.2.0 -[Aha] - 2026-11-09\r\n\r\n本版的改动：搜索关键词能用 `#` 直接按视频标签筛选，AI 对话能在生成到一半时停下来，推荐页的来源改成可排序的多，支持三种推荐源同时拉取。上游这轮更新了全量数据 zip 导入导出、缓存时可选音质、分P/分集/合集面板重做、离线缓存补字幕与章节、楼中楼评论树、专栏合集、用户主页重构、桌面悬停预览，Linux 接入 MPRIS 并换掉自带 WebView。\r\n\r\n修的问题里比较要紧的是音量超过 100% 破音、杀进程后点「等待中」条目续不上、桌面触屏模式下偶发把鼠标当成第二根手指，导致无法触控快进快退，以及长按倍速时切集后倍速没恢复。\r\n\r\n### Added\r\n\r\n- **仅 WiFi 自动播放**：播放设置新增开关（默认关）。开启后手机在蜂窝网络下进入视频详情页不再自动起播，WiFi、桌面端与开关关闭时的行为保持原样；进页面后中途换网络不重新判定。（#39",
+          "downloadURL": "https://github.com/Starfallan/PiliNara/releases/download/2.2.0/PiliNara_ios_2.2.0%2B6231.ipa",
+          "size": 26646283,
+          "minOSVersion": "15.0"
+        },
+        {
+          "version": "2.1.6",
+          "buildVersion": "6077",
+          "date": "2026-10-17",
+          "localizedDescription": "小更新：\r\n将离线缓存模块完全重构，跟随上游的相关改动，但是新增了手动文件夹和相关功能\r\n修复了部分番剧因为存在智能修复画质导致播放失败的问题\r\n同步了上游的最新修改，如新增评论的直接跳转等，详细可自行查看上游的更新日志\r\n\r\n**Full Changelog**: https://github.com/Starfallan/PiliNara/compare/2.1.6...2.6.1.1",
+          "downloadURL": "https://github.com/Starfallan/PiliNara/releases/download/2.1.6.1/PiliNara_ios_2.1.6%2B6077.ipa",
+          "size": 25967643,
+          "minOSVersion": "15.0"
+        },
+        {
+          "version": "2.1.6",
+          "buildVersion": "6057",
+          "date": "2026-10-15",
+          "localizedDescription": "## 2.1.6 -[Arcane] - 2026-10-15\r\n\r\n更新了！新版本支持没开播时也能进房看封面、收发弹幕，UP 主页和官方一致新增入口。缓存这边，从下载面板存的合集会按合集原顺序排列，离线播放也能用缓存下来的片段跳过片头。设置里新增「锁定后禁止重力感应旋转」，iOS 补上了系统画中画。上游也更新了非常多，番剧多季切换、离线合集分组、我的页可配置卡片、自定义 buvid、转发时同时评论等，桌面端窗口与托盘换成 nativeapi。修的问题里比较要紧的是同视频复用导致的黑屏、开启关键词过滤后综合搜索异常，以及弹幕数与高能进度条互相取消。\r\n\r\n### Added\r\n- **未开播直播间进入聊天室**：主播未开播或正在轮播时不再被拦住，可进房看封面、收弹幕、发弹幕，历史记录也能进入；没有播放器时播放区显示封面与「直播未开始」，聊天列表与发送栏保持不变。（#3033）\r\n- **锁定后禁止重力感应旋转**：全屏锁定后横屏视频不再随设备方向左右翻转。播放设置新增独立开关，默认关闭。\r\n- **缓存合集按合集原顺序排列**：从下载面板缓存合集视频时，自动创建的文件夹默认按合集本身的",
+          "downloadURL": "https://github.com/Starfallan/PiliNara/releases/download/2.1.6/PiliNara_ios_2.1.6%2B6057.ipa",
+          "size": 25925763,
+          "minOSVersion": "15.0"
+        }
+      ]
     }
   ],
   "news": []

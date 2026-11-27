@@ -9,6 +9,10 @@
         "buildVersion": "1",
         "name": "MoviePilot",
         "minOSVersion": "16.0",
+        "devices": [
+          "iPhone",
+          "iPad"
+        ],
         "privacy": {
           "NSCameraUsageDescription": "在 MoviePilot 网页、扫码与插件中使用相机拍照或识别二维码。",
           "NSFaceIDUsageDescription": "用于验证你的身份以授权敏感操作或插件安全能力。",
@@ -29,6 +33,10 @@
         "buildVersion": "1",
         "name": "MoviePilot",
         "minOSVersion": "16.0",
+        "devices": [
+          "iPhone",
+          "iPad"
+        ],
         "privacy": {
           "NSCameraUsageDescription": "在 MoviePilot 网页、扫码与插件中使用相机拍照或识别二维码。",
           "NSFaceIDUsageDescription": "用于验证你的身份以授权敏感操作或插件安全能力。",
@@ -49,6 +57,10 @@
         "buildVersion": "1",
         "name": "MoviePilot",
         "minOSVersion": "16.0",
+        "devices": [
+          "iPhone",
+          "iPad"
+        ],
         "privacy": {
           "NSCameraUsageDescription": "在 MoviePilot 网页、扫码与插件中使用相机拍照或识别二维码。",
           "NSFaceIDUsageDescription": "用于验证你的身份以授权敏感操作或插件安全能力。",
@@ -63,11 +75,149 @@
         ],
         "needsEntitlementsOverride": false
       }
-    }
+    },
+    "devices": [
+      "iPhone",
+      "iPad"
+    ]
   },
-  "arichornlover/uyouenhanced": {
+  "arichornlover/uyouenhanced:com.google.ios.youtube": {
     "config": "c383ed3e22a7d0c4863cc12f23612669f11fabe2ec533fc87def3eba1b7a8df9",
     "bundleIdentifier": "com.google.ios.youtube",
-    "assets": {}
+    "assets": {},
+    "devices": [
+      "iPhone",
+      "iPad"
+    ]
+  },
+  "xitrix/itorrent": {
+    "config": "fb960ba20ec95163731d2e0714b29902178fac35bf2b00379ba1739ce2f6ecd8",
+    "bundleIdentifier": "com.xitrix.iTorrent2",
+    "assets": {
+      "[482285253,\"2026-07-19T09:59:39Z\",24288935,\"sha256:50457a89299bd62836ca1eb1ae0a5adbe097454c58ce67605bbe6710c37193d7\"]": {
+        "bundleIdentifier": "com.xitrix.iTorrent2",
+        "version": "2.2.0",
+        "buildVersion": "1",
+        "name": "iTorrent",
+        "minOSVersion": "16.0",
+        "devices": [
+          "iPhone",
+          "iPad"
+        ],
+        "privacy": {
+          "NSLocalNetworkUsageDescription": "iTorrent uses the local network to discover playback devices and cast video on your network."
+        },
+        "entitlements": [
+          "com.apple.security.application-groups",
+          "get-task-allow"
+        ],
+        "needsEntitlementsOverride": false
+      },
+      "[330160586,\"2025-12-18T09:43:35Z\",8362011,\"sha256:8194f03444534d41eeac799f09bb7b7a73877606ba1573999f0c28987a379c1a\"]": {
+        "bundleIdentifier": "com.xitrix.iTorrent2",
+        "version": "2.1.1",
+        "buildVersion": "1",
+        "name": "iTorrent",
+        "minOSVersion": "16.0",
+        "devices": [
+          "iPhone",
+          "iPad"
+        ],
+        "privacy": {},
+        "entitlements": [
+          "com.apple.security.application-groups",
+          "get-task-allow"
+        ],
+        "needsEntitlementsOverride": false
+      },
+      "[308527765,\"2025-10-25T08:40:15Z\",7092275,\"sha256:801195733584a7a468c5e2f08d28f6f267b3db956f6430e6420f4c21364dd6a7\"]": {
+        "bundleIdentifier": "com.xitrix.iTorrent2",
+        "version": "2.1.0",
+        "buildVersion": "1",
+        "name": "iTorrent",
+        "minOSVersion": "16.0",
+        "devices": [
+          "iPhone",
+          "iPad"
+        ],
+        "privacy": {},
+        "entitlements": [
+          "com.apple.security.application-groups",
+          "get-task-allow"
+        ],
+        "needsEntitlementsOverride": false
+      }
+    },
+    "devices": [
+      "iPhone",
+      "iPad"
+    ]
+  },
+  "starfallan/pilinara": {
+    "config": "5ee8cc13f81028cdf2409b9be2d5c40d565b490cfe68f6dc7ea336748cb3fce3",
+    "bundleIdentifier": "com.example.pilinara",
+    "assets": {
+      "[725787808,\"2026-11-09T01:20:00Z\",26646283,\"sha256:9641a3a86d4f5b7ffe2e7d3b5fc69327509ae9fc757544419ec8acfabfcb9dcc\"]": {
+        "bundleIdentifier": "com.example.pilinara",
+        "version": "2.2.0",
+        "buildVersion": "6231",
+        "name": "PiliNara",
+        "minOSVersion": "15.0",
+        "devices": [
+          "iPhone",
+          "iPad"
+        ],
+        "privacy": {
+          "NSAppleMusicUsageDescription": "App需要您的同意,才能访问媒体资料库",
+          "NSCameraUsageDescription": "App需要您的同意,才能访问相册",
+          "NSLocalNetworkUsageDescription": "需要访问本地网络以发现和连接 DLNA 投屏设备",
+          "NSPhotoLibraryUsageDescription": "请允许APP保存图片到相册"
+        },
+        "entitlements": [],
+        "needsEntitlementsOverride": false
+      },
+      "[649730151,\"2026-10-17T06:16:16Z\",25967643,\"sha256:59648d537bd1627533c93df2513811d3ee466d48d839a5f0842e964ce68cdb98\"]": {
+        "bundleIdentifier": "com.example.pilinara",
+        "version": "2.1.6",
+        "buildVersion": "6077",
+        "name": "PiliNara",
+        "minOSVersion": "15.0",
+        "devices": [
+          "iPhone",
+          "iPad"
+        ],
+        "privacy": {
+          "NSAppleMusicUsageDescription": "App需要您的同意,才能访问媒体资料库",
+          "NSCameraUsageDescription": "App需要您的同意,才能访问相册",
+          "NSLocalNetworkUsageDescription": "需要访问本地网络以发现和连接 DLNA 投屏设备",
+          "NSPhotoLibraryUsageDescription": "请允许APP保存图片到相册"
+        },
+        "entitlements": [],
+        "needsEntitlementsOverride": false
+      },
+      "[643049792,\"2026-10-15T07:22:50Z\",25925763,\"sha256:83b8f49f7eab2de35fde22a3c45b316db85b1fc0e31c45b513652bad2347b09c\"]": {
+        "bundleIdentifier": "com.example.pilinara",
+        "version": "2.1.6",
+        "buildVersion": "6057",
+        "name": "PiliNara",
+        "minOSVersion": "15.0",
+        "devices": [
+          "iPhone",
+          "iPad"
+        ],
+        "privacy": {
+          "NSAppleMusicUsageDescription": "App需要您的同意,才能访问媒体资料库",
+          "NSCameraUsageDescription": "App需要您的同意,才能访问相册",
+          "NSLocalNetworkUsageDescription": "需要访问本地网络以发现和连接 DLNA 投屏设备",
+          "NSPhotoLibraryUsageDescription": "请允许APP保存图片到相册"
+        },
+        "entitlements": [],
+        "needsEntitlementsOverride": false
+      }
+    },
+    "devices": [
+      "iPhone",
+      "iPad"
+    ]
   }
 }
