@@ -6,5 +6,10 @@
       "iconURL": "https://raw.githubusercontent.com/jxxghp/MoviePilot-Frontend/main/public/logo.png",
       "tintColor": "#5E5CE6"
     }
+  },
+  {
+    "repo": "arichornlover/uYouEnhanced",
+    "sourceURL": "https://raw.githubusercontent.com/arichornlover/arichornlover.github.io/main/apps.json",
+    "bundleIdentifier": "com.google.ios.youtube"
   }
 ]

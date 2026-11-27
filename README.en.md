@@ -2,7 +2,7 @@
 
 [简体中文](README.md) · [![Update the IPA source](https://github.com/astralwaveorg/iDockHub/actions/workflows/update-ipa-source.yml/badge.svg?branch=main)](https://github.com/astralwaveorg/iDockHub/actions/workflows/update-ipa-source.yml)
 
-iDockHub lists open source iOS apps for LiveContainer and SideStore. Each download points to its upstream GitHub Release. The source keeps up to three versions per app.
+iDockHub lists iOS apps for LiveContainer and SideStore. Each download comes from a GitHub Release or the publisher's own source. iDockHub keeps up to three versions per app.
 
 ## Add the source
 
@@ -35,6 +35,7 @@ sidestore://source?url=https%3A%2F%2Fraw.githubusercontent.com%2Fastralwaveorg%2
 | App | Latest version | Date (UTC) | Upstream repository |
 | --- | --- | --- | --- |
 | MoviePilot | 2.0.9 | 2026-11-27 | [jxxghp/MoviePilot-App](https://github.com/jxxghp/MoviePilot-App) |
+| uYouEnhanced | 21.20.4 | 2026-10-09 | [arichornlover/uYouEnhanced](https://github.com/arichornlover/uYouEnhanced) |
 
 <!-- APPS_TABLE_END -->
 
@@ -66,6 +67,12 @@ The repository and channel usually suffice. Add these fields when you need them:
 
 List each repository once. Each app ID must be unique. If you remove an entry, the next successful sync removes that app from the source.
 
+### Import from the publisher's source
+
+If a publisher lists IPA files in its own source, use `sourceURL`. Use the publisher's GitHub Pages URL or a raw GitHub file from the same account. If the source lists several apps, set `bundleIdentifier` to select one. Omit `channel` for this type of entry.
+
+uYouEnhanced uses this method. The script keeps the publisher's version and permission records. It checks that the download URL returns an IPA. It supports IPA files on GitHub and the Internet Archive.
+
 ## Run the sync
 
 GitHub Actions schedules a sync every three hours. A push to `main` that changes the app list or sync code also starts a run. To start a run yourself, select **Run workflow** in [Actions](https://github.com/astralwaveorg/iDockHub/actions/workflows/update-ipa-source.yml).
@@ -87,5 +94,6 @@ The script generates the source, both app tables, and a cache of IPA metadata. T
 | `ipa/.sync-state.json` | Generated cache that prevents repeat IPA downloads |
 | [`ipa/update_source.py`](ipa/update_source.py) | Sync releases and update the source and app tables |
 | [`ipa/ipa_metadata.py`](ipa/ipa_metadata.py) | Read the version and permissions from an IPA |
+| [`ipa/publisher_source.py`](ipa/publisher_source.py) | Import a publisher's source and check downloads |
 | [`scripts/`](scripts/) | Reserved for iOS, proxy configuration, and automation scripts |
 | [`shortcuts/`](shortcuts/) | Reserved for iOS shortcuts |

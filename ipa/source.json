@@ -1,7 +1,7 @@
 {
   "name": "iDockHub IPA Source",
   "subtitle": "个人自维护 iOS 开源应用源",
-  "description": "从 GitHub Releases 收录开源 iOS 应用。每 3 小时检查一次更新。",
+  "description": "收录来自 GitHub Releases 和项目维护者软件源的 IPA。每 3 小时检查一次更新。",
   "identifier": "org.astralwave.idockhub",
   "sourceURL": "https://raw.githubusercontent.com/astralwaveorg/iDockHub/main/ipa/source.json",
   "apps": [
@@ -55,6 +55,67 @@
         }
       ],
       "tintColor": "#5E5CE6"
+    },
+    {
+      "name": "uYouEnhanced",
+      "bundleIdentifier": "com.google.ios.youtube",
+      "developerName": "arichornlover & Various Contributors",
+      "localizedDescription": "uYou is the best tweak for the YouTube app. uYouEnhanced is a modified version of qnblackcat's uYouPlus & MiRO92's uYou with even more features. Additional features include customizable UI, enhanced video controls, and more.",
+      "iconURL": "https://raw.githubusercontent.com/arichornlover/uYouEnhanced/1314354bff6ef07aca60d7b9a77bd91a5f985ab4/Localizations/uYouPlus.bundle/AppIcons/AppIcon4.png",
+      "tintColor": "#e81e8a",
+      "appPermissions": {
+        "privacy": {
+          "NSAppleMusicUsageDescription": "This lets you add your own audio files to your videos.",
+          "NSBluetoothPeripheralUsageDescription": "YouTube needs bluetooth access to scan for nearby Cast devices.",
+          "NSCameraUsageDescription": "This lets you create videos using the app.",
+          "NSContactsUsageDescription": "Your contacts will be sent to YouTube servers to help you find friends to share videos with.",
+          "NSLocalNetworkUsageDescription": "Access to your network allows YouTube to discover and connect to devices such as your TV.",
+          "NSLocationWhenInUseUsageDescription": "Makes it easier for you to attach location information to your videos and live streams and allows for features such as improved recommendations and ads.",
+          "NSMicrophoneUsageDescription": "This lets you include audio with your videos and search using your voice.",
+          "NSPhotoLibraryUsageDescription": "This lets you upload media you've already created.",
+          "NSUserTrackingUsageDescription": "A message that informs the user why an app is requesting permission to use data for tracking the user or the device."
+        },
+        "entitlements": [
+          "aps-environment",
+          "com.apple.developer.associated-domains",
+          "com.apple.developer.coremedia.allow-alternate-video-decoder-selection",
+          "com.apple.developer.device-information.user-assigned-device-name",
+          "com.apple.developer.group-session",
+          "com.apple.developer.networking.multicast",
+          "com.apple.developer.networking.wifi-info",
+          "com.apple.developer.siri",
+          "com.apple.developer.usernotifications.time-sensitive",
+          "com.apple.security.application-groups",
+          "get-task-allow",
+          "keychain-access-groups"
+        ]
+      },
+      "versions": [
+        {
+          "version": "21.20.4",
+          "date": "2026-10-09",
+          "localizedDescription": "Current YouTube IPA: \"21.20.4\"\nCurrent uYou Version: \"3.0.5 (Unofficial)\"\n\nRELEASE 21.20.4 - 3.0.5: (2026-10-09)\n\n• Updated for YouTube 21.20.4\n• Reworked uYou downloads (now finish reliably)\n• Added uYouEnhanced Debug Logs\n• Restored BigYTMiniPlayer\n• Fixed 25 reported issues\n• Bug fixes and stability improvements",
+          "downloadURL": "https://archive.org/download/YouTubeRebornPlus_19.10.5-4.2.6/yt-uYE-21204-305.ipa",
+          "size": 154391978,
+          "minOSVersion": "16.0"
+        },
+        {
+          "version": "21.14.4",
+          "date": "2026-08-22",
+          "localizedDescription": "Current YouTube IPA: \"21.14.4\"\nCurrent uYou Version: \"3.0.5 (Unofficial)\"\n\nRELEASE 21.14.4 - 3.0.5: (2026-08-22)\n\n• Updated for YouTube 21.14.4\n• uYou Download enhancements\n• Bug fixes and stability improvements",
+          "downloadURL": "https://archive.org/download/YouTubeRebornPlus_19.10.5-4.2.6/yt-uYE-21144-305.ipa",
+          "size": 135840058,
+          "minOSVersion": "16.0"
+        },
+        {
+          "version": "20.44.2",
+          "date": "2026-02-24",
+          "localizedDescription": "Current YouTube IPA: \"20.44.2\"\nCurrent uYouEnhanced Version: \"3.0.4\"\n\nRELEASE 20.44.2 - 3.0.4: (2026-02-24)\n\n• Updated for YouTube 20.44.2\n• Updated App features\n• Bug fixes",
+          "downloadURL": "https://archive.org/download/YouTubeRebornPlus_19.10.5-4.2.6/yt-uYE-20442-304.ipa",
+          "size": 134673057,
+          "minOSVersion": "16.0"
+        }
+      ]
     }
   ],
   "news": []

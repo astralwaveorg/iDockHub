@@ -64,5 +64,10 @@
         "needsEntitlementsOverride": false
       }
     }
+  },
+  "arichornlover/uyouenhanced": {
+    "config": "c383ed3e22a7d0c4863cc12f23612669f11fabe2ec533fc87def3eba1b7a8df9",
+    "bundleIdentifier": "com.google.ios.youtube",
+    "assets": {}
   }
 }

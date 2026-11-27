@@ -2,7 +2,7 @@
 
 [English](README.en.md) · [![更新 IPA 软件源](https://github.com/astralwaveorg/iDockHub/actions/workflows/update-ipa-source.yml/badge.svg?branch=main)](https://github.com/astralwaveorg/iDockHub/actions/workflows/update-ipa-source.yml)
 
-iDockHub 为 LiveContainer 和 SideStore 提供开源 iOS 应用的软件源。下载链接指向上游 GitHub Release。每个应用最多保留 3 个版本。
+iDockHub 为 LiveContainer 和 SideStore 提供 iOS 应用的软件源。下载链接来自上游 GitHub Release 或项目维护者的软件源。每个应用最多保留 3 个版本。
 
 ## 订阅软件源
 
@@ -35,12 +35,13 @@ sidestore://source?url=https%3A%2F%2Fraw.githubusercontent.com%2Fastralwaveorg%2
 | 应用 | 最新版本 | 日期（UTC） | 上游仓库 |
 | --- | --- | --- | --- |
 | MoviePilot | 2.0.9 | 2026-11-27 | [jxxghp/MoviePilot-App](https://github.com/jxxghp/MoviePilot-App) |
+| uYouEnhanced | 21.20.4 | 2026-10-09 | [arichornlover/uYouEnhanced](https://github.com/arichornlover/uYouEnhanced) |
 
 <!-- APPS_TABLE_END -->
 
 ## 添加应用
 
-打开 [`ipa/apps.json`](ipa/apps.json)，在数组中加入一条。仓库须公开，并在 GitHub Release 中提供可直接下载的 `.ipa` 文件。
+打开 [`ipa/apps.json`](ipa/apps.json)，在数组中加入一条。通常只需要公开仓库的名称，且仓库须在 GitHub Release 中提供可直接下载的 `.ipa` 文件。
 
 ```json
 { "repo": "jxxghp/MoviePilot-App" }
@@ -66,6 +67,12 @@ sidestore://source?url=https%3A%2F%2Fraw.githubusercontent.com%2Fastralwaveorg%2
 
 每个仓库只配置一次。同一个应用标识也只能出现一次。从清单中删掉一条，下一次成功同步时就会移除该应用。
 
+### 从维护者的软件源添加
+
+如果维护者通过自己的软件源发布 IPA，而 GitHub Release 没有附件，可以用 `sourceURL` 导入。填写维护者的 GitHub Pages 地址或同一账号下的 GitHub 原始文件地址。软件源有多个应用时，加 `bundleIdentifier` 指定一个。此方式不需要 `channel`。
+
+uYouEnhanced 使用这种方式。脚本保留发布者提供的版本和权限信息，并检查下载地址能否返回 IPA。当前支持托管在 GitHub 或 Internet Archive 的 IPA。
+
 ## 运行同步
 
 GitHub Actions 每 3 小时安排一次同步。推送清单或同步脚本的变更到 `main` 也会触发同步。需要立即运行时，在 [Actions](https://github.com/astralwaveorg/iDockHub/actions/workflows/update-ipa-source.yml) 中点 **Run workflow**。
@@ -87,5 +94,6 @@ python3 ipa/update_source.py
 | `ipa/.sync-state.json` | 生成的缓存，避免重复下载同一个 IPA |
 | [`ipa/update_source.py`](ipa/update_source.py) | 同步 Release 并更新软件源和文档 |
 | [`ipa/ipa_metadata.py`](ipa/ipa_metadata.py) | 读取 IPA 中的版本和权限信息 |
+| [`ipa/publisher_source.py`](ipa/publisher_source.py) | 导入维护者的软件源并检查下载地址 |
 | [`scripts/`](scripts/) | 预留给 iOS、代理配置和自动化脚本 |
 | [`shortcuts/`](shortcuts/) | 预留给 iOS 快捷指令 |

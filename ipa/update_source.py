@@ -11,6 +11,7 @@ from urllib.parse import quote, urlsplit
 from urllib.request import Request, urlopen
 
 from ipa_metadata import inspect_asset
+from publisher_source import read_app as read_publisher_app, validate_source_url
 
 IPA_DIR = Path(__file__).resolve().parent
 README_TABLES = {
@@ -25,7 +26,7 @@ APP_FIELDS = {"name", "developerName", "localizedDescription", "iconURL", "tintC
 SOURCE = {
     "name": "iDockHub IPA Source",
     "subtitle": "个人自维护 iOS 开源应用源",
-    "description": "从 GitHub Releases 收录开源 iOS 应用。每 3 小时检查一次更新。",
+    "description": "收录来自 GitHub Releases 和项目维护者软件源的 IPA。每 3 小时检查一次更新。",
     "identifier": "org.astralwave.idockhub",
     "sourceURL": "https://raw.githubusercontent.com/astralwaveorg/iDockHub/main/ipa/source.json",
 }
@@ -75,7 +76,7 @@ def load_config(path):
     for i, config in enumerate(configs, 1):
         if not isinstance(config, dict):
             raise ValueError(f"apps.json 第 {i} 项必须是 JSON 对象")
-        allowed = {"repo", "channel", "tag", "assetPattern", "overrides"}
+        allowed = {"repo", "channel", "tag", "assetPattern", "overrides", "sourceURL", "bundleIdentifier"}
         if unknown := config.keys() - allowed:
             raise ValueError(f"apps.json 第 {i} 项有未知字段：{', '.join(sorted(unknown))}")
         repo = config.get("repo")
@@ -113,6 +114,22 @@ def load_config(path):
                 raise ValueError(f"{repo} 的 iconURL 必须是公开的 HTTPS 地址")
         if "tintColor" in overrides and not re.fullmatch(r"#?[0-9a-fA-F]{6}", overrides["tintColor"]):
             raise ValueError(f"{repo} 的 tintColor 必须是六位十六进制颜色")
+
+        if "sourceURL" in config:
+            if config.keys() & {"channel", "tag", "assetPattern"}:
+                raise ValueError(f"{repo} 的 sourceURL 不能与 Release 渠道字段一起填写")
+            if not isinstance(config["sourceURL"], str):
+                raise ValueError(f"{repo} 的 sourceURL 必须是字符串")
+            validate_source_url(config["sourceURL"], repo.split("/")[0])
+            if "bundleIdentifier" in config and (
+                not isinstance(config["bundleIdentifier"], str)
+                or not re.fullmatch(r"[A-Za-z0-9.-]+", config["bundleIdentifier"])
+            ):
+                raise ValueError(f"{repo} 的 bundleIdentifier 无效")
+            config.setdefault("overrides", {})
+            continue
+        if "bundleIdentifier" in config:
+            raise ValueError(f"{repo} 只有使用 sourceURL 时才能填写 bundleIdentifier")
 
         config.setdefault("channel", "stable")
         config.setdefault("assetPattern", "*.ipa")
@@ -299,7 +316,10 @@ def main():
             signature = config_fingerprint(config)
             old = previous_state.get(repo.lower(), {})
             try:
-                app, cached = build_app(config, token, old.get("assets", {}))
+                if "sourceURL" in config:
+                    app, cached = read_publisher_app(config, MAX_VERSIONS), {}
+                else:
+                    app, cached = build_app(config, token, old.get("assets", {}))
                 if old.get("config") == signature and old["bundleIdentifier"] != app["bundleIdentifier"]:
                     raise ValueError("上游 IPA 的应用标识已改变。请核对渠道和资产")
             except (OSError, ValueError, KeyError, TypeError) as exc:

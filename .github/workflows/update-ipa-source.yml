@@ -10,6 +10,7 @@ on:
       - "ipa/apps.json"
       - "ipa/update_source.py"
       - "ipa/ipa_metadata.py"
+      - "ipa/publisher_source.py"
       - ".github/workflows/update-ipa-source.yml"
 
 permissions:
