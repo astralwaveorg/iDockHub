@@ -29,30 +29,30 @@
       },
       "versions": [
         {
+          "version": "2.0.12",
+          "buildVersion": "32",
+          "date": "2026-11-28",
+          "localizedDescription": "MoviePilot 现已全面提供 **iOS / iPadOS**、**Android** 与 **HarmonyOS NEXT** 三端全原生客户端（统一版本 **`2.0.12`**），基于 Rust 共享业务内核直连 MoviePilot V3 后端，带来一致的核心功能闭环与地道原生界面体验。\n\n### 本版本核心亮点\n\n- **三端 Agent 助手形象系统**：支持读取插件提供的助手形象、管理员默认项和用户选择；新增原生形象选择弹层、插件舞台与渲染层、状态及交互事件桥接。插件形象加载失败时自动回退内置机器人，内置助手仍支持拖动、贴边和动作动画。\n- **订阅规则编辑增强**：补齐全局默认规则编辑，并完善订阅参数输入；支持自定义质量、分辨率和特效规则，影视类别与剧集分组选择，季号和集数输入、目录建议，以及音乐订阅的音质参数。\n- **原生插件壳与页面体验更新**：同步三端联邦插件运行时资源；完善文件管理、站点、系统设置与诊断页面，并优化社区勋章的原生 3D 展示。\n\n### 安装包说明\n\n| 平台 | 版本 | 产物文件 | 适用设备与安装说明 |\n| :--- | :---",
+          "downloadURL": "https://github.com/jxxghp/MoviePilot-App/releases/download/v2.0.12/MoviePilot-2.0.12-ios-unsigned.ipa",
+          "size": 52166351,
+          "minOSVersion": "16.0"
+        },
+        {
+          "version": "2.0.11",
+          "buildVersion": "1",
+          "date": "2026-11-28",
+          "localizedDescription": "MoviePilot 现已全面提供 **iOS / iPadOS**、**Android** 与 **HarmonyOS NEXT** 三端全原生客户端（统一版本 **`2.0.11`**），基于 Rust 共享业务内核直连 MoviePilot V3 后端，带来一致的核心功能闭环与地道原生界面体验。\n\n### 本版本核心亮点\n\n- **三端深色视觉层次与界面细节全面打磨**：\n  - **更深邃的默认「极简石墨」画布与 iOS OLED 纯黑模式**：同步压深三端默认极简石墨深色底色（`#101218 → #0C0E14`），并在 iOS「主题与外观」新增 **OLED 纯黑模式（`#000000`）** 开关；优化实时预览卡片严格同心圆角，仅在选中「自定义」预设时展开拾色器。\n  - **影视详情页海报主色丝绒融底与内容减框**：iOS 详情页动态提取海报主色调平滑融底，强化中下部渐变遮罩确保纯白片名清晰无重影；三端详情页「剧情简介」去掉多余外框，改为直排阅读流与内联展开控制；鸿蒙详情页收敛杂色标签胶囊，采用清晰年份 · 类型 · 来源排版与柔和「已入库」徽标。\n  - **悬浮 ",
+          "downloadURL": "https://github.com/jxxghp/MoviePilot-App/releases/download/v2.0.11/MoviePilot-2.0.11-ios-unsigned.ipa",
+          "size": 51892334,
+          "minOSVersion": "16.0"
+        },
+        {
           "version": "2.0.10",
           "buildVersion": "1",
           "date": "2026-11-27",
           "localizedDescription": "MoviePilot 现已全面提供 **iOS / iPadOS**、**Android** 与 **HarmonyOS NEXT** 三端全原生客户端（统一版本 **`2.0.10`**），基于 Rust 共享业务内核直连 MoviePilot V3 后端，带来一致的核心功能闭环与地道原生界面体验。\n\n### 本版本核心亮点\n\n- **发现页与影视详情页支持免配置多元评分展示**：\n  - 无需额外部署或填写第三方密钥，详情页与发现流自动聚合展示 IMDb、TMDB、豆瓣、烂番茄与 Bangumi 多元评分徽标，并在关联 Emby / Plex 媒体库时自动融合媒体服务器侧评分元数据。\n- **三端播放器投屏入口与卡片列表交互优化**：\n  - iOS（系统 AirPlay 路由面板）、Android 与 HarmonyOS NEXT 播放器顶栏统一配备原生投屏图标按钮。\n  - 订阅卡片与下载任务卡片统一收敛为长按唤出删除操作，移除常驻冗余删除按钮；修正订阅页加载骨架屏占位卡片宽度与实际卡片完全对齐。\n- **iOS MPV 增强播放内核体验全面修复**：\n  - **彻底修复内嵌",
           "downloadURL": "https://github.com/jxxghp/MoviePilot-App/releases/download/v2.0.10/MoviePilot-2.0.10-ios-unsigned.ipa",
           "size": 51826476,
-          "minOSVersion": "16.0"
-        },
-        {
-          "version": "2.0.9",
-          "buildVersion": "1",
-          "date": "2026-11-27",
-          "localizedDescription": "MoviePilot 现已全面提供 **iOS / iPadOS**、**Android** 与 **HarmonyOS NEXT** 三端全原生客户端（统一版本 **`2.0.9`**），基于 Rust 共享业务内核直连 MoviePilot V3 后端，带来一致的核心功能闭环与地道原生界面体验。\n\n### 本版本核心亮点\n\n- **三端全面支持通行密钥（Passkey）无密码登录**：\n  - iOS / iPadOS、Android 与 HarmonyOS NEXT 统一接入 `moviepilot.passkey` v1 安全认证协议，自动探测服务端 `/api/v1/auth/providers` 启用状态并校验前端静态协议与安全来源。\n  - 支持免输账号密码一键唤起系统通行密钥面板（或按已输入用户名精确发起挑战），事务令牌严格驻留客户端内存，完成浏览器同源与挑战签名校验后自动激活会话并遵循「保持登录」偏好。\n- **三端登录界面视觉层级与按钮布局优化**：\n  - 重构主「登录」实心胶囊与「使用通行密钥登录」玻璃描边次级按钮的视觉主次关系，无需填写表单即可直接点击通行密钥",
-          "downloadURL": "https://github.com/jxxghp/MoviePilot-App/releases/download/v2.0.9/MoviePilot-2.0.9-ios-unsigned.ipa",
-          "size": 51682733,
-          "minOSVersion": "16.0"
-        },
-        {
-          "version": "2.0.8",
-          "buildVersion": "1",
-          "date": "2026-11-27",
-          "localizedDescription": "MoviePilot 现已全面提供 **iOS / iPadOS**、**Android** 与 **HarmonyOS NEXT** 三端全原生客户端（统一版本 **`2.0.8`**），基于 Rust 共享业务内核直连 MoviePilot V3 后端，带来一致的核心功能闭环与地道原生界面体验。\n\n### 本版本核心亮点\n\n- **三端流畅度、高刷滚动与页面秒开深度性能优化**：\n  - **Android 全面减负提速**：引入全局 Compose Compiler 稳定性配置（`compose_stability.conf`），让跨模块 DTO 与列表项全面支持智能跳过无效重组；移除主壳与详情页全屏嵌套 `hazeSource` 离屏纹理拷贝及逐像素动态模糊半径重建，将首页与影视详情页的视差、顶栏柔化罩全部下沉至纯绘制层执行，实现零整页重组丝滑滚动；一级主导航（发现、订阅、我的、更多）升级为常驻内存保活并扩展设置与插件中心会话缓存，切换页签与返回上级达到 0ms 瞬开；Coil 图片管线补齐 256MB 磁盘缓存、25% 内存缓存、缩略图按需降采样与代理图片持久化缓存策略。\n ",
-          "downloadURL": "https://github.com/jxxghp/MoviePilot-App/releases/download/v2.0.8/MoviePilot-2.0.8-ios-unsigned.ipa",
-          "size": 51640679,
           "minOSVersion": "16.0"
         }
       ],
