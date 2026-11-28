@@ -3,7 +3,7 @@
     "config": "251e189a67944fc3af148c3a5b02490a8c4778eec5027749a73d29982d0c91c3",
     "bundleIdentifier": "com.moviepilot.app",
     "assets": {
-      "[801801885,\"2026-11-27T19:37:49Z\",51818796,\"sha256:20a1db6c67e1d3ce975534be5ca354f8537cdc5431d5c18390b0927448a0533c\"]": {
+      "[802897461,\"2026-11-28T02:28:35Z\",51826476,\"sha256:8a6bffd131ad5a1189566982a191154008526b8e41d015e89dd364dd99261d38\"]": {
         "bundleIdentifier": "com.moviepilot.app",
         "version": "2.0.10",
         "buildVersion": "1",
